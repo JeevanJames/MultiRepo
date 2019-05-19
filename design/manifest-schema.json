@@ -1,0 +1,20 @@
+{
+    
+    "root": "..",
+    "repos": {
+        "https://github.com/JeevanJames/ConsoleFx.git": {
+            "type": "git",
+            "dir": "Libraries\\ConsoleFx",
+            "tags": ["library", "dotnet"]
+        },
+        "https://github.com/JeevanJames/MultiRepo.git": {
+            "type": "git",
+            "dir": "Apps\\MultiRepo",
+            "tags": ["app", "cli", "dotnet"]
+        }
+    },
+    "extensions": {
+        "Vcs.Git": "1.2.3",
+        "Some.Other.Extension": "4.5.6-beta.10"
+    }
+}
