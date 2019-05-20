@@ -1,10 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>mr</AssemblyName>
     <RootNamespace>MultiRepo.Cli</RootNamespace>
+    <!-- Package details -->
+    <PackageId>dotnet-mr</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Jeevan James</Authors>
+    <Company>Jeevan James</Company>
+    <Product>MultiRepo</Product>
+    <Description>dotnet tool to manage multi-repository projects.</Description>
+    <Copyright>Copyright (c) 2019 Jeevan James</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/JeevanJames/MultiRepo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JeevanJames/MultiRepo.git</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <!-- DotNet tool -->
+    <!--<PackAsTool>true</PackAsTool>
+    <ToolCommandName>mr</ToolCommandName>-->
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -15,11 +30,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.50" />
     <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.50" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

@@ -4,12 +4,12 @@
     "repos": {
         "https://github.com/JeevanJames/ConsoleFx.git": {
             "type": "git",
-            "dir": "Libraries\\ConsoleFx",
+            "dir": "Libraries/ConsoleFx",
             "tags": ["library", "dotnet"]
         },
         "https://github.com/JeevanJames/MultiRepo.git": {
             "type": "git",
-            "dir": "Apps\\MultiRepo",
+            "dir": "Apps/MultiRepo",
             "tags": ["app", "cli", "dotnet"]
         }
     },

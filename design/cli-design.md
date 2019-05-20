@@ -9,20 +9,20 @@ This command initializes a new multi-repo. A multi-repo needs a JSON manifest de
 Clones an existing multi-repository project to the local machine.
 
 ```sh
-mr clone <repo url> [<dir>] [--output | -o <dir>]
+mr clone <manifest repo url> [<manifest dir>] [--project-root-dir <dir>]
 ```
 
-`<repo url>` [Required]
+`<manifest repo url>` [Required]
 
 The URL to the repository that contains the JSON manifest file.
 
-`<dir>` [Optional]
+`<manifest dir>` [Optional]
 
 The relative directory in the repository where the JSON manifest file is located.
 
 **Default**: The root directory in the repo.
 
-`--output, -o`
+`--project-root-dir, -r` [Optional]
 
 The directory on the local system to setup the multi-repo project. This directory becomes the root directory for the project.
 
