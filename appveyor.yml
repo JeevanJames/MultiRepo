@@ -1,0 +1,16 @@
+version: 1.0.{build}
+image: Visual Studio 2019 Preview
+environment:
+  MYGET_API_KEY:
+    secure: 3tEiaoqZlTJcJkAX+3wWyp3mbCYuJpALEFzTEaum6ACiXbWgsa1kWYGBi3TUFY7c
+  MYGET_FEED: https://www.myget.org/F/multi-repo/api/v3/index.json
+build_script:
+- pwsh: >-
+    dotnet build -c Release
+
+    dotnet build -c Release-Tool
+deploy_script:
+- pwsh: >-
+    dotnet pack src/Cli/Cli.csproj -c Release-Tool /p:Version=$env:APPVEYOR_BUILD_VERSION
+
+    dotnet nuget push src/Cli/bin/Release-Tool/dotnet-mr.$env:APPVEYOR_BUILD_VERSION.nupkg -s $env:MYGET_FEED -k $env:MYGET_API_KEY

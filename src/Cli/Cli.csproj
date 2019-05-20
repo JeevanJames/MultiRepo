@@ -17,9 +17,6 @@
     <PackageProjectUrl>https://github.com/JeevanJames/MultiRepo</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JeevanJames/MultiRepo.git</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <!-- DotNet tool -->
-    <!--<PackAsTool>true</PackAsTool>
-    <ToolCommandName>mr</ToolCommandName>-->
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -30,7 +27,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Tool|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>mr</ToolCommandName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Tool|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>mr</ToolCommandName>
   </PropertyGroup>
 
   <ItemGroup>
