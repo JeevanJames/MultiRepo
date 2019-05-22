@@ -3,7 +3,9 @@
 ## Initialize a multi-repo
 This command initializes a new multi-repo. A multi-repo needs a JSON manifest definition file stored in either a separate repository or in an existing repository at a specific folder.
 
-    TBD
+```sh
+mr init 
+```
 
 ## Clone an existing multi-repo
 Clones an existing multi-repository project to the local machine.
