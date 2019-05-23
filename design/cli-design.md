@@ -16,7 +16,7 @@ mr clone <manifest repo url> [<manifest dir>] [--project-root-dir <dir>]
 
 `<manifest repo url>` [Required]
 
-The URL to the repository that contains the JSON manifest file.
+The URL to the repository that contains the JSON manifest file. This could be a separate repository just to hold the manifest file and related files, or an existing repository where the manifest is stored under some directory. In the latter case, use the `<manifest dir>` argument to specify the directory location.
 
 `<manifest dir>` [Optional]
 
