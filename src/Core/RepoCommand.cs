@@ -73,7 +73,9 @@ namespace Core
             IEnumerable<KeyValuePair<string, RepositoryDefinition>> repos = Manifest.Repositories;
 
             if (Tags.Count > 0)
-                repos = repos.Where(r => r.Value.HasTags(Tags));
+                repos = repos.Where(r => r.Value.HasAllTags(Tags));
+            else if (ExcludedTags.Count > 0)
+                repos = repos.Where(r => !r.Value.HasAnyTag(ExcludedTags));
 
             return repos;
         }

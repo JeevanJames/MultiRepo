@@ -30,9 +30,14 @@ namespace Core
             internal set => _tags = value;
         }
 
-        public bool HasTags(IEnumerable<string> tags)
+        public bool HasAllTags(IEnumerable<string> tags)
         {
             return tags.All(tag => Tags.Any(t => t.Equals(tag, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        public bool HasAnyTag(IEnumerable<string> tags)
+        {
+            return tags.Any(tag => Tags.Any(t => t.Equals(tag, StringComparison.OrdinalIgnoreCase)));
         }
     }
 }
