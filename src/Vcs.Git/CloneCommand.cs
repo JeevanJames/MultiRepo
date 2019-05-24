@@ -9,7 +9,7 @@ using ConsoleFx.CmdLine.Validators;
 using static ConsoleFx.ConsoleExtensions.Clr;
 using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
-namespace MultiRepo.Cli
+namespace Vcs.Git
 {
     [Command("clone")]
     public sealed class CloneCommand : ProgramCommand

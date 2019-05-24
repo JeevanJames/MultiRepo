@@ -29,3 +29,11 @@ The relative directory in the repository where the JSON manifest file is located
 The directory on the local system to setup the multi-repo project. This directory becomes the root directory for the project.
 
 **Default**: The current directory.
+
+## Get latest from repositories
+Gets the latest from the selected repositories.
+
+```sh
+mr pull [--tags=<tag1>,<tag2>... | --exclude-tags=<tag1>,<tag2>... | --only-me]
+```
+

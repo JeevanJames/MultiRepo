@@ -3,6 +3,10 @@
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
 
+using Core;
+
+using Vcs.Git;
+
 namespace MultiRepo.Cli
 {
     [Program]
@@ -17,6 +21,8 @@ namespace MultiRepo.Cli
         protected override IEnumerable<Arg> GetArgs()
         {
             yield return new CloneCommand();
+            yield return new ListCommand();
+            yield return new PullCommand();
         }
     }
 }
