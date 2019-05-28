@@ -1,11 +1,46 @@
 # Command-line interface
 
+## Common CLI options
+
+### For all commands
+`--help, -h`
+
+Displays help for the specified command.
+
+### Root level options
+`--version`
+
+Displays the version of the tool.
+
+### Repo options
+Commands that operate on the repos of an existing project.
+
+`--only-me`
+
+Includes only the repo under the currentr diretory. If the current directory is not part of a repo, an error is displayed.
+
+`--tags <tag1> <tag2> ...`
+
+Includes only repos that have all the specified tags.
+
+`--exclude-tags <tag1> <tag2> ...`
+
+Excludes repos that have any of the specified tags.
+
 ## Initialize a multi-repo
 This command initializes a new multi-repo. A multi-repo needs a JSON manifest definition file stored in either a separate repository or in an existing repository at a specific folder.
 
 ```sh
-mr init 
+mr init <project-root-dir> <manifest dir>
 ```
+
+`<project-root-dir>` [Required]
+
+The directory to setup the new multi-repo project in. This becomes the root directory of the project.
+
+`<manifest dir>` [Required]
+
+The relative directory from the project root directory to contain the manifest.
 
 ## Clone an existing multi-repo
 Clones an existing multi-repository project to the local machine.
@@ -34,6 +69,5 @@ The directory on the local system to setup the multi-repo project. This director
 Gets the latest from the selected repositories.
 
 ```sh
-mr pull [--tags=<tag1>,<tag2>... | --exclude-tags=<tag1>,<tag2>... | --only-me]
+mr pull [repo options]
 ```
-
