@@ -1,7 +1,6 @@
 ﻿using System;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
 
 namespace Core
 {
@@ -10,11 +9,11 @@ namespace Core
     ///     <para/>
     ///     This means that the command should be executed from within a valid MultiRepo project.
     /// </summary>
-    public abstract class ManifestCommand : ProgramCommand
+    public abstract class ManifestCommand : Command
     {
         private static Project _manifestDetails;
 
-        public ManifestCommand()
+        protected ManifestCommand()
         {
             if (_manifestDetails is null)
                 _manifestDetails = new Project();

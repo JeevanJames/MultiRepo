@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
 using ConsoleFx.CmdLine.Validators;
 
 using static ConsoleFx.ConsoleExtensions.Clr;
@@ -12,7 +11,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Vcs.Git
 {
     [Command("clone")]
-    public sealed class CloneCommand : ProgramCommand
+    public sealed class CloneCommand : Command
     {
         public Uri RepoUrl { get; set; }
 
