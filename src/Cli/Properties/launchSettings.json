@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "clone https://github.com/JeevanJames/_project --rdir D:\\\\Temp"
+    },
+    "List": {
+      "commandName": "Project",
+      "commandLineArgs": "list --tags library"
+    },
+    "Pull": {
+      "commandName": "Project",
+      "commandLineArgs": "pull --tags dotnet services --exclude-tags nodejs tests --only-me"
+    },
+    "Status": {
+      "commandName": "Project",
+      "commandLineArgs": "status"
+    }
+  }
+}
