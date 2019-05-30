@@ -13,7 +13,7 @@ namespace Core
         public IDictionary<string, RepositoryDefinition> Repositories { get; } = new Dictionary<string, RepositoryDefinition>();
     }
 
-    [DebuggerDisplay(@"[{Type}] {RepositoryLocation} ({string.Join("" "", Tags)")]
+    [DebuggerDisplay(@"[{Type}] {RepositoryLocation} ({string.Join("" "", Tags)})")]
     public sealed class RepositoryDefinition
     {
         private IList<string> _tags;

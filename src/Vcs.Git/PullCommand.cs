@@ -2,6 +2,7 @@
 using ConsoleFx.CmdLine;
 
 using Core;
+using Core.Commands;
 
 namespace Vcs.Git
 {

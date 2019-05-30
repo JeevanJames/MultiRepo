@@ -1,7 +1,11 @@
 ﻿using System;
 using System.IO;
+
 using ConsoleFx.CmdLine;
+
 using Core;
+using Core.Commands;
+
 using LibGit2Sharp;
 
 namespace Vcs.Git
@@ -13,7 +17,7 @@ namespace Vcs.Git
         {
             foreach (var repository in FilteredRepositories)
             {
-                string repoPath = Path.Combine(Project.RootDirectory.FullName, repository.Value.RelativeDirectory);
+                string repoPath = Path.Combine(Project.RootDirectory.FullName, repository.Value.RepositoryLocation);
                 Console.WriteLine(repoPath);
                 using (Repository repo = new Repository(repoPath))
                 {
