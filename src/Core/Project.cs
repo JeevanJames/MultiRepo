@@ -103,7 +103,7 @@ namespace Core
         {
             KeyValuePair<string, RepositoryDefinition> matchingRepo = Manifest.Repositories.FirstOrDefault(r =>
             {
-                string repoDirectory = Path.Combine(RootDirectory.FullName, r.Value.RelativeDirectory);
+                string repoDirectory = Path.Combine(RootDirectory.FullName, r.Value.RepositoryLocation);
                 return CurrentDirectory.FullName.StartsWith(repoDirectory, StringComparison.OrdinalIgnoreCase);
             });
 

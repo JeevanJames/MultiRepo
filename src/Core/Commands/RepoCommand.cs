@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
 using ConsoleFx.CmdLine.Validators;
 
-namespace Core
+namespace Core.Commands
 {
     public abstract class RepoCommand : ManifestCommand
     {

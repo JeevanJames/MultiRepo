@@ -6,7 +6,7 @@ using ConsoleFx.CmdLine;
 using static ConsoleFx.ConsoleExtensions.Clr;
 using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
-namespace Core
+namespace Core.Commands
 {
     [Command("list")]
     public sealed class ListCommand : RepoCommand
@@ -17,7 +17,7 @@ namespace Core
             {
                 PrintLine($"{Magenta}{repo.Key}");
                 PrintLine($"    Type     : {Cyan}{repo.Value.Type}");
-                PrintLine($"    Directory: {Cyan}{Path.Combine(Project.RootDirectory.FullName, repo.Value.RelativeDirectory)}");
+                PrintLine($"    Directory: {Cyan}{Path.Combine(Project.RootDirectory.FullName, repo.Value.RepositoryLocation)}");
                 PrintLine($"    Tags     : {Cyan}{string.Join(" ", repo.Value.Tags)}");
                 PrintBlank();
             }

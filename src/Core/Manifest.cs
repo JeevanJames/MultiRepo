@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
 using Newtonsoft.Json;
 
 namespace Core
@@ -12,7 +13,7 @@ namespace Core
         public IDictionary<string, RepositoryDefinition> Repositories { get; } = new Dictionary<string, RepositoryDefinition>();
     }
 
-    [DebuggerDisplay(@"[{Type}] {RelativeDirectory} ({string.Join("" "", Tags)")]
+    [DebuggerDisplay(@"[{Type}] {RepositoryLocation} ({string.Join("" "", Tags)")]
     public sealed class RepositoryDefinition
     {
         private IList<string> _tags;
@@ -20,8 +21,8 @@ namespace Core
         [JsonProperty("type")]
         public string Type { get; internal set; }
 
-        [JsonProperty("dir")]
-        public string RelativeDirectory { get; internal set; }
+        [JsonProperty("repo")]
+        public string RepositoryLocation { get; internal set; }
 
         [JsonProperty("tags")]
         public IList<string> Tags

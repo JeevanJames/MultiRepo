@@ -2,7 +2,7 @@
 
 using ConsoleFx.CmdLine;
 
-namespace Core
+namespace Core.Commands
 {
     /// <summary>
     ///     Base class for any <see cref="Command"/> that requires the manifest.
