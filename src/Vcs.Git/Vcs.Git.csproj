@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleFx.CmdLine.Abstractions" Version="2.0.0-build.58" />
-    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.58" />
+    <PackageReference Include="ConsoleFx.CmdLine.Abstractions" Version="2.0.0-build.61" />
+    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.61" />
     <PackageReference Include="LibGit2Sharp" Version="0.26.0" />
   </ItemGroup>
 

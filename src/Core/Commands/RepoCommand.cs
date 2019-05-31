@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -56,6 +57,20 @@ namespace Core.Commands
         }
 
         private static readonly Regex TagPattern = new Regex(@"^(\w[\w_-]*)$");
+
+        protected override int HandleCommand()
+        {
+            foreach (KeyValuePair<string, RepositoryDefinition> repo in FilteredRepositories)
+            {
+                string repoDir = Path.Combine(Project.RootDirectory.FullName, repo.Key);
+                HandleRepo(repo.Key, repo.Value, repoDir);
+            }
+            return 0;
+        }
+
+        protected virtual void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
+        {
+        }
 
         private IEnumerable<KeyValuePair<string, RepositoryDefinition>> GetFilteredRepositories()
         {

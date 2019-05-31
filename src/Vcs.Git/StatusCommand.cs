@@ -13,26 +13,20 @@ namespace Vcs.Git
     [Command("status")]
     public sealed class StatusCommand : RepoCommand
     {
-        protected override int HandleCommand()
+        protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
         {
-            foreach (var repository in FilteredRepositories)
+            Console.WriteLine(dir);
+            using (Repository repository = new Repository(dir))
             {
-                string repoPath = Path.Combine(Project.RootDirectory.FullName, repository.Value.RepositoryLocation);
-                Console.WriteLine(repoPath);
-                using (Repository repo = new Repository(repoPath))
-                {
-                    RepositoryStatus status = repo.RetrieveStatus();
-                    Console.WriteLine("Added");
-                    foreach (StatusEntry entry in status.Added)
-                        Console.WriteLine($"    {entry.FilePath}");
-                    Console.WriteLine("Modified");
-                    foreach (StatusEntry entry in status.Modified)
-                        Console.WriteLine($"    {entry.FilePath}");
-                    Console.WriteLine();
-                }
+                RepositoryStatus status = repository.RetrieveStatus();
+                Console.WriteLine("Added");
+                foreach (StatusEntry entry in status.Added)
+                    Console.WriteLine($"    {entry.FilePath}");
+                Console.WriteLine("Modified");
+                foreach (StatusEntry entry in status.Modified)
+                    Console.WriteLine($"    {entry.FilePath}");
+                Console.WriteLine();
             }
-
-            return 0;
         }
     }
 }

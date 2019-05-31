@@ -10,7 +10,7 @@
     },
     "Pull": {
       "commandName": "Project",
-      "commandLineArgs": "pull --tags dotnet services --exclude-tags nodejs tests --only-me"
+      "commandLineArgs": "pull --tags library"
     },
     "Status": {
       "commandName": "Project",
