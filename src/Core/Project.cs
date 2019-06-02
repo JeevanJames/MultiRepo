@@ -90,7 +90,7 @@ namespace Core
 
         private Manifest ReadManifest()
         {
-            string manifestFilePath = Path.Combine(ManifestDirectory.FullName, "mr.manifest");
+            string manifestFilePath = Path.Combine(ManifestDirectory.FullName, "mr.manifest.json");
             if (!File.Exists(manifestFilePath))
                 return null;
 

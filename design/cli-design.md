@@ -31,7 +31,7 @@ Excludes repos that have any of the specified tags.
 This command initializes a new multi-repo. A multi-repo needs a JSON manifest definition file stored in either a separate repository or in an existing repository at a specific folder.
 
 ```sh
-mr init <project-root-dir> <manifest dir>
+mr init <project-root-dir> <manifest dir> [--discover] [--branch <branch name>]
 ```
 
 `<project-root-dir>` [Required]
@@ -41,6 +41,14 @@ The directory to setup the new multi-repo project in. This becomes the root dire
 `<manifest dir>` [Required]
 
 The relative directory from the project root directory to contain the manifest.
+
+`--discover` [Optional]
+
+If specified, attempts to locate repositories under the `<project-root-dir>` and add them to the project.
+
+`--branch` [Optional]
+
+The branch of the repository to checkout for the manifest details.
 
 ## Clone an existing multi-repo
 Clones an existing multi-repository project to the local machine.

@@ -60,6 +60,9 @@ namespace Core.Commands
 
         protected override int HandleCommand()
         {
+            if (!Project.IsValidProject)
+                throw new InvalidOperationException("Not a project. Should be in a project folder to execute this command.");
+
             foreach (KeyValuePair<string, RepositoryDefinition> repo in FilteredRepositories)
             {
                 string repoDir = Path.Combine(Project.RootDirectory.FullName, repo.Key);

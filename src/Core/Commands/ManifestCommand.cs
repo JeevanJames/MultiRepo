@@ -11,17 +11,15 @@ namespace Core.Commands
     /// </summary>
     public abstract class ManifestCommand : Command
     {
-        private static Project _manifestDetails;
+        private static Project _project;
 
         protected ManifestCommand()
         {
-            if (_manifestDetails is null)
-                _manifestDetails = new Project();
-            if (!_manifestDetails.IsValidProject)
-                throw new InvalidOperationException("Invalid project.");
+            if (_project is null)
+                _project = new Project();
         }
 
-        public Project Project => _manifestDetails;
+        public Project Project => _project;
 
         public Manifest Manifest => Project.Manifest;
     }

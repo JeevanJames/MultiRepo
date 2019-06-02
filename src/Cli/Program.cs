@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 
 using ConsoleFx.CmdLine.Program;
 
@@ -9,8 +11,14 @@ namespace MultiRepo.Cli
     {
         private static int Main()
         {
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Trace.AutoFlush = true;
+            //DebugOutput.Enable();
+
             var program = new Program();
-            program.ScanAssembliesForCommands(Assembly.Load("Core"), Assembly.Load("Vcs.Git"));
+            Assembly core = Assembly.Load("Core");
+            Assembly vcsGit = Assembly.Load("Vcs.Git");
+            program.ScanAssembliesForCommands(core, vcsGit);
             return program.Run();
         }
     }

@@ -2,7 +2,7 @@
   "profiles": {
     "Clone": {
       "commandName": "Project",
-      "commandLineArgs": "clone https://github.com/JeevanJames/_project --rdir D:\\\\Temp"
+      "commandLineArgs": "clone https://github.com/JeevanJames/_project --project-root-dir D:\\Temp\\MyProjects"
     },
     "List": {
       "commandName": "Project",
