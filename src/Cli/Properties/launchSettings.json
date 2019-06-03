@@ -4,6 +4,10 @@
       "commandName": "Project",
       "commandLineArgs": "clone https://github.com/JeevanJames/_project --project-root-dir D:\\Temp\\MyProjects"
     },
+    "Exec": {
+      "commandName": "Project",
+      "commandLineArgs": "exec"
+    },
     "List": {
       "commandName": "Project",
       "commandLineArgs": "list --tags library"

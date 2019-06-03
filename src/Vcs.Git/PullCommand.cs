@@ -1,9 +1,11 @@
 ﻿using System;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.ConsoleExtensions;
 
 using LibGit2Sharp;
+
+using static ConsoleFx.ConsoleExtensions.Clr;
+using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Vcs.Git
 {
@@ -12,11 +14,11 @@ namespace Vcs.Git
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {
-            ConsoleEx.PrintLine($"Pulling from {Clr.Magenta}{repoUrl} {Clr.Reset} to {Clr.Yellow}{directory}");
+            PrintLine($"Pulling from {Magenta}{repoUrl} {Reset}to {Yellow}{directory}");
             var signature = new Signature("Multi Repo", "no-reply@jeevanjames.com", DateTimeOffset.Now);
             MergeResult result = LibGit2Sharp.Commands.Pull(repo, signature, new PullOptions());
-            ConsoleEx.PrintLine($"    Status: {Clr.Cyan}{result.Status}");
-            ConsoleEx.PrintBlank();
+            PrintLine($"    Status: {Cyan}{result.Status}");
+            PrintBlank();
         }
     }
 }
