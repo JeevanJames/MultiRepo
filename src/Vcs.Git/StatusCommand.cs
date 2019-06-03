@@ -1,31 +1,50 @@
-﻿using System;
-using System.IO;
+﻿
+using System.Collections.Generic;
+using System.Linq;
 
 using ConsoleFx.CmdLine;
 
-using Core;
-using Core.Commands;
-
 using LibGit2Sharp;
+
+using static ConsoleFx.ConsoleExtensions.Clr;
+using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Vcs.Git
 {
     [Command("status")]
-    public sealed class StatusCommand : RepoCommand
+    public sealed class StatusCommand : GitCommand
     {
-        protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
+        [Option("include-ignored")]
+        public bool IncludeIgnored { get; set; }
+
+        [Option("include-untracked")]
+        public bool IncludeUntracked { get; set; }
+
+        protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {
-            Console.WriteLine(dir);
-            using (Repository repository = new Repository(dir))
+            PrintLine($"{Cyan}{directory}");
+
+            var options = new StatusOptions
             {
-                RepositoryStatus status = repository.RetrieveStatus();
-                Console.WriteLine("Added");
-                foreach (StatusEntry entry in status.Added)
-                    Console.WriteLine($"    {entry.FilePath}");
-                Console.WriteLine("Modified");
-                foreach (StatusEntry entry in status.Modified)
-                    Console.WriteLine($"    {entry.FilePath}");
-                Console.WriteLine();
+                IncludeIgnored = IncludeIgnored,
+                IncludeUntracked = IncludeUntracked,
+            };
+            RepositoryStatus status = repo.RetrieveStatus(options);
+            foreach (StatusEntry statusItem in status)
+                PrintLine($"{Magenta}[{statusItem.State}] {Reset}{statusItem.FilePath}");
+            PrintBlank();
+        }
+
+        protected override IEnumerable<Arg> GetArgs()
+        {
+            return base.GetArgs().Concat(GetMyArgs());
+
+            IEnumerable<Arg> GetMyArgs()
+            {
+                yield return new Option("include-ignored", "i")
+                    .UsedAsFlag();
+                yield return new Option("include-untracked", "u")
+                    .UsedAsFlag();
             }
         }
     }

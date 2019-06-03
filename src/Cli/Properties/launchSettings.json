@@ -14,7 +14,7 @@
     },
     "Status": {
       "commandName": "Project",
-      "commandLineArgs": "status"
+      "commandLineArgs": "status -u"
     }
   }
 }
