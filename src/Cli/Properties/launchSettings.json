@@ -20,6 +20,10 @@
       "commandName": "Project",
       "commandLineArgs": "status -u"
     },
+    "Tags-List": {
+      "commandName": "Project",
+      "commandLineArgs": "tags list"
+    },
     "Version": {
       "commandName": "Project",
       "commandLineArgs": "--version"
