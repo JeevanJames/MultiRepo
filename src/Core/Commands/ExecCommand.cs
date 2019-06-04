@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using ConsoleFx.Capture;
@@ -21,11 +22,20 @@ namespace Core.Commands
 
         protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
         {
-            PrintLine($"{Cyan}{dir}");
-            string args = string.Join(" ", ExecArgs.Skip(1).ToArray());
-            ConsoleCaptureResult result = ConsoleCapture.Start(ExecArgs.First(), args);
-            PrintLine(result.OutputMessage);
-            PrintBlank();
+            string currentDir = Directory.GetCurrentDirectory();
+            Directory.SetCurrentDirectory(dir);
+            try
+            {
+                PrintLine($"{Cyan}{dir}");
+                string args = string.Join(" ", ExecArgs.Skip(1).ToArray());
+                ConsoleCaptureResult result = ConsoleCapture.Start(ExecArgs.First(), args);
+                PrintLine(result.OutputMessage);
+                PrintBlank();
+            }
+            finally
+            {
+                Directory.SetCurrentDirectory(currentDir);
+            }
         }
 
         protected override IEnumerable<Arg> GetArgs()
