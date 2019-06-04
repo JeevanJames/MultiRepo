@@ -8,13 +8,13 @@
       "commandName": "Project",
       "commandLineArgs": "exec -- node --version"
     },
-    "List": {
-      "commandName": "Project",
-      "commandLineArgs": "list --tags library"
-    },
     "Pull": {
       "commandName": "Project",
       "commandLineArgs": "pull --tags library"
+    },
+    "Repos-List": {
+      "commandName": "Project",
+      "commandLineArgs": "repos list --tags library"
     },
     "Status": {
       "commandName": "Project",

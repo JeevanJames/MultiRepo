@@ -8,7 +8,12 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Core.Commands
 {
-    [Command("list")]
+    [Command("repos")]
+    public sealed class ReposCommand : Command
+    {
+    }
+
+    [Command("list", typeof(ReposCommand))]
     public sealed class ListCommand : RepoCommand
     {
         protected override int HandleCommand()
