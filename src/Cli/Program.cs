@@ -31,9 +31,15 @@ namespace MultiRepo.Cli
         {
             if (Version)
             {
-                string version = File.ReadAllText("Version.txt");
-                Console.WriteLine(version);
+                Assembly assembly = Assembly.GetEntryAssembly();
+                using (var stream = assembly.GetManifestResourceStream($"{typeof(Program).Namespace}.Version.txt"))
+                using (var reader = new StreamReader(stream))
+                {
+                    string version = reader.ReadToEnd();
+                    Console.WriteLine(version);
+                }
             }
+
             return 0;
         }
 

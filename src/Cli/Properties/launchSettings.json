@@ -19,6 +19,10 @@
     "Status": {
       "commandName": "Project",
       "commandLineArgs": "status -u"
+    },
+    "Version": {
+      "commandName": "Project",
+      "commandLineArgs": "--version"
     }
   }
 }
