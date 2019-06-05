@@ -5,7 +5,7 @@ environment:
     secure: 3tEiaoqZlTJcJkAX+3wWyp3mbCYuJpALEFzTEaum6ACiXbWgsa1kWYGBi3TUFY7c
   MYGET_FEED: https://www.myget.org/F/multi-repo/api/v3/index.json
 before_build:
-  - pwsh: set-content ./src/Cli/Version.txt "$env:APPVEYOR_BUILD_VERSION""
+  - pwsh: set-content ./src/Cli/Version.txt "$env:APPVEYOR_BUILD_VERSION"
 build_script:
 - pwsh: >-
     dotnet build -c Release
