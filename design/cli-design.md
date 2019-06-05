@@ -54,7 +54,7 @@ The branch of the repository to checkout for the manifest details.
 Clones an existing multi-repository project to the local machine.
 
 ```sh
-mr clone <manifest repo url> [<manifest dir>] [--project-root-dir <dir>]
+mr clone <manifest repo url> [<manifest repo dir>] [--project-root-dir <dir>] [--]
 ```
 
 `<manifest repo url>` [Required]

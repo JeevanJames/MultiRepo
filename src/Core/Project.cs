@@ -13,14 +13,16 @@ namespace Core
         {
             CurrentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
 
-            RootDirectory = GetRootDirectory(out string manifestDir);
+            RootDirectory = GetRootDirectory(out MarkerFile markerFile);
             if (RootDirectory is null)
             {
                 IsValidProject = false;
                 return;
             }
 
-            ManifestDirectory = GetManifestDirectory(manifestDir);
+            MarkerFile = markerFile;
+
+            ManifestDirectory = GetManifestDirectory(markerFile.LocalDirectory);
             if (ManifestDirectory is null)
             {
                 IsValidProject = false;
@@ -44,41 +46,84 @@ namespace Core
             }
         }
 
+        /// <summary>
+        ///     Gets a value indicating whether the current directory is under a valid project
+        ///     directory structure.
+        /// </summary>
+        /// <remarks>
+        ///     For the current directory to be under a valid project, it must have a parent directory
+        ///     at any level, which contains a marker JSON file names .mr.manifest.
+        ///     <para />
+        ///     This marker file must contain details of the sub-directory containing the manifest file
+        ///     (mr.manifest.json), the repository from where to get the files and any other additional
+        ///     information.
+        /// </remarks>
         public bool IsValidProject { get; }
 
+        /// <summary>
+        ///     Gets a value indicating whether the current directory is part of a repository specified
+        ///     by the containing project.
+        /// </summary>
         public bool InARepo { get; }
 
+        /// <summary>
+        ///     Gets the current directory.
+        /// </summary>
         public DirectoryInfo CurrentDirectory { get; }
 
+        /// <summary>
+        ///     Gets the root directory of the project, which contains the marker file.
+        /// </summary>
         public DirectoryInfo RootDirectory { get; }
 
+        /// <summary>
+        ///     Gets the directory that contains the manifest information.
+        /// </summary>
         public DirectoryInfo ManifestDirectory { get; }
 
+        /// <summary>
+        ///     Gets the manifest for this project.
+        /// </summary>
         public Manifest Manifest { get; }
 
+        /// <summary>
+        ///     Gets the marker file details for this project.
+        /// </summary>
+        public MarkerFile MarkerFile { get; }
+
+        /// <summary>
+        ///     Gets the name of the current repository, if the current directory belongs to a
+        ///     repository. See the <see cref="InARepo"/> property.
+        /// </summary>
         public string CurrentRepoName { get; }
 
+        /// <summary>
+        ///     Gets the details of the current repository, if the current directory belongs to a
+        ///     repository. See the <see cref="InARepo"/> property.
+        /// </summary>
         public RepositoryDefinition CurrentRepo { get; }
 
-        private DirectoryInfo GetRootDirectory(out string manifestDir)
+        private DirectoryInfo GetRootDirectory(out MarkerFile markerFile)
         {
             DirectoryInfo currentDir = CurrentDirectory;
-            manifestDir = null;
-            while (currentDir != null && !IsRootDirectory(currentDir, out manifestDir))
+            markerFile = null;
+            while (currentDir != null && !IsRootDirectory(currentDir, out markerFile))
                 currentDir = currentDir.Parent;
             return currentDir;
         }
 
-        private bool IsRootDirectory(DirectoryInfo directory, out string manifestDir)
+        private bool IsRootDirectory(DirectoryInfo directory, out MarkerFile markerFile)
         {
             string rootMarkerFilePath = Path.Combine(directory.FullName, ".mr.manifest");
             if (!File.Exists(rootMarkerFilePath))
             {
-                manifestDir = null;
+                markerFile = null;
                 return false;
             }
 
-            manifestDir = File.ReadAllText(rootMarkerFilePath);
+            string markerContent = File.ReadAllText(rootMarkerFilePath);
+            markerFile = JsonConvert.DeserializeObject<MarkerFile>(markerContent);
+
             return true;
         }
 

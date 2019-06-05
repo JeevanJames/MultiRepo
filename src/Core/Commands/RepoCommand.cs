@@ -47,12 +47,6 @@ namespace Core.Commands
 
                 yield return new Option("only-me")
                     .UsedAsFlag(optional: true);
-
-                yield return new Option("repos")
-                    .UsedAsUnlimitedOccurrencesAndParameters(optional: true);
-
-                yield return new Option("exclude-repos")
-                    .UsedAsUnlimitedOccurrencesAndParameters(optional: true);
             }
         }
 

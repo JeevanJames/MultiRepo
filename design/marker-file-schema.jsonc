@@ -1,0 +1,18 @@
+{
+    // The relative directory from the root (marker file) where this project
+    // manifest  is cloned
+    "localDir": "_project",
+
+    // The clone URL of the project repository.
+    "repo": "https://github.com/JeevanJames/_project.git",
+
+    // Optional
+    // Branch in the project repository to be used.
+    // Default: Default branch
+    "branch": "master",
+
+    // Optional
+    // Relative directory in the project repository that contains the manifest file.
+    // Default: The root directory
+    "repoDir": ""
+}

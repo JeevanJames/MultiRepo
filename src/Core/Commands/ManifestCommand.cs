@@ -1,6 +1,4 @@
-﻿using System;
-
-using ConsoleFx.CmdLine;
+﻿using ConsoleFx.CmdLine;
 
 namespace Core.Commands
 {
