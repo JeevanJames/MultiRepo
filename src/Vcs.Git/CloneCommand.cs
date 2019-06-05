@@ -5,16 +5,20 @@ using System.Linq;
 
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Validators;
-using ConsoleTables;
+
 using Core;
+
 using LibGit2Sharp;
+
 using Newtonsoft.Json;
+
 using static ConsoleFx.ConsoleExtensions.Clr;
 using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Vcs.Git
 {
     [Command("clone")]
+    [PushDirectory]
     public sealed class CloneCommand : Command
     {
         public Uri ManifestRepoUrl { get; set; }
@@ -33,14 +37,10 @@ namespace Vcs.Git
 
         protected override int HandleCommand()
         {
-            using (new DirectoryPusher())
-            {
-                CreateRootDirectory();
-                CloneManifestRepo();
-                CreateMarkerFile();
-                CloneRepos();
-            }
-
+            CreateRootDirectory();
+            CloneManifestRepo();
+            CreateMarkerFile();
+            CloneRepos();
             return 0;
         }
 

@@ -19,12 +19,6 @@ namespace Core.Commands
         [Option("exclude-tags")]
         public IList<string> ExcludedTags { get; set; }
 
-        [Option("repos")]
-        public IList<string> Repositories { get; set; }
-
-        [Option("exclude-repos")]
-        public IList<string> ExcludedRepositories { get; set; }
-
         [Option("only-me")]
         public bool OnlyMe { get; set; }
 
