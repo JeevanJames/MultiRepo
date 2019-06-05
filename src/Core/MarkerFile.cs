@@ -11,10 +11,10 @@ namespace Core
         [JsonProperty("repo", Required = Required.Always)]
         public string RepositoryUrl { get; set; }
 
-        [JsonProperty("branch", Required = Required.DisallowNull)]
+        [JsonProperty("branch", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
         public string Branch { get; set; }
 
-        [JsonProperty("repoDir", Required = Required.DisallowNull)]
+        [JsonProperty("repoDir", NullValueHandling = NullValueHandling.Ignore)]
         public string RepositoryDirectory { get; set; }
     }
 }
