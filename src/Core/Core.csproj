@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleFx.Capture" Version="2.0.0-build.84" />
-    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.84" />
-    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.84" />
+    <PackageReference Include="ConsoleFx.Capture" Version="2.0.0-build.106" />
+    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.106" />
+    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.106" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 

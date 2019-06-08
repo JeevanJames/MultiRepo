@@ -13,11 +13,6 @@ namespace Core.Commands
     [Command("exec")]
     public sealed class ExecCommand : RepoCommand
     {
-        public ExecCommand()
-        {
-            LastArgumentRepeat = byte.MaxValue;
-        }
-
         public IList<string> ExecArgs { get; set; }
 
         protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
@@ -44,7 +39,7 @@ namespace Core.Commands
 
             IEnumerable<Arg> GetMyArgs()
             {
-                yield return new Argument(nameof(ExecArgs));
+                yield return new Argument(nameof(ExecArgs), maxOccurences: byte.MaxValue);
             }
         }
     }

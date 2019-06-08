@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
 
 namespace MultiRepo.Cli
 {
-    [Program]
+    [Program("mr")]
     internal sealed class Program : ConsoleProgram
     {
         [Option("version")]
