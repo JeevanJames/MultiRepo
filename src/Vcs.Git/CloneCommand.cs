@@ -5,7 +5,7 @@ using System.Linq;
 
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Validators;
-
+using ConsoleFx.ConsoleExtensions;
 using Core;
 
 using LibGit2Sharp;
@@ -21,18 +21,23 @@ namespace Vcs.Git
     [PushDirectory]
     public sealed class CloneCommand : Command
     {
+        [Help("manifest repo url", "The clone URL of the repository that contains the project manifest.")]
         public Uri ManifestRepoUrl { get; set; }
 
         [Option("branch")]
+        [Help("The branch in the manifest repository to checkout. Defaults to the default branch.")]
         public string Branch { get; set; }
 
         [Option("root-dir")]
+        [Help("The root directory of the project being cloned.")]
         public DirectoryInfo RootDirectory { get; set; }
 
         [Option("manifest-dir")]
+        [Help("The relative directory from the project root to clone the manifest repository to. Defaults to _project.")]
         public string ManifestDirectory { get; set; }
 
         [Option("repo-dir")]
+        [Help("The directory in the manifest repository that contains the manifest file.")]
         public string RepoDirectory { get; set; }
 
         protected override int HandleCommand()
@@ -59,13 +64,22 @@ namespace Vcs.Git
         {
             string manifestRepoDir = Path.Combine(RootDirectory.FullName, ManifestDirectory);
 
+            ProgressBar progressBar = ProgressBar(new ProgressBarSpec
+            {
+                Format = "Cloning repository... [<<bar>>] <<percentage>>%",
+            }, style: ProgressBarStyle.Shaded);
+
             var cloneOptions = new CloneOptions();
             if (!string.IsNullOrEmpty(Branch))
                 cloneOptions.BranchName = Branch;
-            cloneOptions.OnProgress += status =>
+            //cloneOptions.OnProgress += status =>
+            //{
+            //    PrintLine($"{Magenta}{status}");
+            //    return true;
+            //};
+            cloneOptions.OnCheckoutProgress += (path, completedSteps, totalSteps) =>
             {
-                PrintLine($"{Magenta}{status}");
-                return true;
+                progressBar.Value = (completedSteps * 100) / totalSteps;
             };
 
             string result = Repository.Clone(ManifestRepoUrl.ToString(), manifestRepoDir, cloneOptions);
@@ -99,17 +113,28 @@ namespace Vcs.Git
             string manifestJson = File.ReadAllText(manifestPath);
             Manifest manifest = JsonConvert.DeserializeObject<Manifest>(manifestJson);
 
+            ProgressBar progressBar = ProgressBar(new ProgressBarSpec
+            {
+                Format = "Cloning repository... [<<bar>>] <<percentage>>%",
+            }, style: ProgressBarStyle.Shaded);
+
             var cloneOptions = new CloneOptions();
             if (!string.IsNullOrEmpty(Branch))
                 cloneOptions.BranchName = Branch;
-            cloneOptions.OnProgress += status =>
+            //cloneOptions.OnProgress += status =>
+            //{
+            //    PrintLine(status);
+            //    return true;
+            //};
+            cloneOptions.OnCheckoutProgress += (path, completedSteps, totalSteps) =>
             {
-                PrintLine(status);
-                return true;
+                progressBar.Value = (completedSteps * 100) / totalSteps;
             };
 
+            PrintBlank();
             foreach (KeyValuePair<string, RepositoryDefinition> repo in manifest.Repositories)
             {
+                progressBar.Value = 0;
                 string repoDir = Path.Combine(RootDirectory.FullName, repo.Key);
                 PrintLine($"{Cyan}Cloning {repo.Value.RepositoryLocation} to {repoDir}:");
                 Repository.Clone(repo.Value.RepositoryLocation, repoDir, cloneOptions);

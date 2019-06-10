@@ -14,12 +14,15 @@ namespace Core.Commands
         private IDictionary<string, RepositoryDefinition> _filteredRepositories;
 
         [Option("tags")]
+        [Help("Operate on only the repositories with these tags.")]
         public IList<string> Tags { get; set; }
 
         [Option("exclude-tags")]
+        [Help("Operate on only repositories without these tags.")]
         public IList<string> ExcludedTags { get; set; }
 
         [Option("only-me")]
+        [Help("Only operate on the repository of the current directory.")]
         public bool OnlyMe { get; set; }
 
         public IDictionary<string, RepositoryDefinition> FilteredRepositories =>
