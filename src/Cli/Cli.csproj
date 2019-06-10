@@ -52,8 +52,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.108" />
-    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.108" />
+    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.110" />
+    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.110" />
   </ItemGroup>
 
   <ItemGroup>
