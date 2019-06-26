@@ -8,6 +8,14 @@
       "commandName": "Project",
       "commandLineArgs": "exec -- git status -bs"
     },
+    "Help": {
+      "commandName": "Project",
+      "commandLineArgs": "--help"
+    },
+    "GitExec": {
+      "commandName": "Project",
+      "commandLineArgs": "git -- status"
+    },
     "Pull": {
       "commandName": "Project",
       "commandLineArgs": "pull --tags library"

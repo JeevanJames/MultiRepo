@@ -2,6 +2,7 @@
 using System.IO;
 
 using ConsoleFx.CmdLine;
+using ConsoleFx.CmdLine.Program;
 
 using static ConsoleFx.ConsoleExtensions.Clr;
 using static ConsoleFx.ConsoleExtensions.ConsoleEx;
@@ -9,12 +10,14 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Core.Commands
 {
     [Command("repos")]
+    [Help("Manage repositories under the current project.")]
     public sealed class ReposCommand : Command
     {
     }
 
     [Command("list", typeof(ReposCommand))]
-    public sealed class ListCommand : RepoCommand
+    [Help("Lists all repositories under the current project.")]
+    public sealed class ReposListCommand : RepoCommand
     {
         protected override int HandleCommand()
         {

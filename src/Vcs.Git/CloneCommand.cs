@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 
 using ConsoleFx.CmdLine;
+using ConsoleFx.CmdLine.Program;
 using ConsoleFx.CmdLine.Validators;
 using ConsoleFx.ConsoleExtensions;
+
 using Core;
 
 using LibGit2Sharp;
@@ -18,6 +20,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Vcs.Git
 {
     [Command("clone")]
+    [Help("Clones a project to the local system.")]
     [PushDirectory]
     public sealed class CloneCommand : Command
     {

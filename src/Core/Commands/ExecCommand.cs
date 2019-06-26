@@ -4,6 +4,7 @@ using System.Linq;
 
 using ConsoleFx.Capture;
 using ConsoleFx.CmdLine;
+using ConsoleFx.CmdLine.Program;
 
 using static ConsoleFx.ConsoleExtensions.Clr;
 using static ConsoleFx.ConsoleExtensions.ConsoleEx;
@@ -11,6 +12,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Core.Commands
 {
     [Command("exec")]
+    [Help("Executes a command for each repository.")]
     public sealed class ExecCommand : RepoCommand
     {
         public IList<string> ExecArgs { get; set; }

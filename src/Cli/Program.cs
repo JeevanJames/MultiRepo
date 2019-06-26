@@ -13,6 +13,7 @@ namespace MultiRepo.Cli
     internal sealed class Program : ConsoleProgram
     {
         [Option("version")]
+        [Help("Displays the version of the program.")]
         public bool Version { get; set; }
 
         private static int Main()
@@ -25,7 +26,7 @@ namespace MultiRepo.Cli
             Assembly core = Assembly.Load("Core");
             Assembly vcsGit = Assembly.Load("Vcs.Git");
             program.ScanAssembliesForCommands(core, vcsGit);
-            return program.Run();
+            return program.RunWithCommandLineArgs();
         }
 
         protected override int HandleCommand()

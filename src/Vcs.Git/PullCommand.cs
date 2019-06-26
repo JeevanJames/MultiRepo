@@ -1,6 +1,7 @@
 ﻿using System;
 
 using ConsoleFx.CmdLine;
+using ConsoleFx.CmdLine.Program;
 
 using LibGit2Sharp;
 
@@ -10,6 +11,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Vcs.Git
 {
     [Command("pull")]
+    [Help("Pulls latest updates from each repository.")]
     public sealed class PullCommand : GitCommand
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
