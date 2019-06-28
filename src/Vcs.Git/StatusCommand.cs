@@ -45,17 +45,25 @@ namespace Vcs.Git
 
                 if (currentBranch.TrackingDetails.AheadBy.HasValue)
                 {
-                    branchStr = branchStr
-                        .Reset(" [ahead: ")
-                        .Green(currentBranch.TrackingDetails.AheadBy.Value.ToString())
-                        .Reset("]");
+                    int aheadBy = currentBranch.TrackingDetails.AheadBy.Value;
+                    if (aheadBy != 0)
+                    {
+                        branchStr = branchStr
+                            .Reset(" [ahead: ")
+                            .Green(aheadBy.ToString())
+                            .Reset("]");
+                    }
                 }
-                else if (currentBranch.TrackingDetails.BehindBy.HasValue)
+                if (currentBranch.TrackingDetails.BehindBy.HasValue)
                 {
-                    branchStr = branchStr
-                        .Reset(" [behind: ")
-                        .Red(currentBranch.TrackingDetails.BehindBy.Value.ToString())
-                        .Reset("]");
+                    int behindBy = currentBranch.TrackingDetails.BehindBy.Value;
+                    if (behindBy != 0)
+                    {
+                        branchStr = branchStr
+                            .Reset(" [behind: ")
+                            .Red(behindBy.ToString())
+                            .Reset("]");
+                    }
                 }
             }
             PrintLine(branchStr);
