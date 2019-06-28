@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
+using ConsoleFx.Capture;
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
 
 using Core;
 using Core.Commands;
+
+using static ConsoleFx.ConsoleExtensions.Clr;
+using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Vcs.Git
 {
@@ -27,7 +32,20 @@ namespace Vcs.Git
 
         protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
         {
-            base.HandleRepo(relativeDir, repoDef, dir);
+            string currentDir = Directory.GetCurrentDirectory();
+            Directory.SetCurrentDirectory(dir);
+            try
+            {
+                PrintLine($"{Cyan}{relativeDir}");
+                string args = string.Join(" ", GitArgs.ToArray());
+                ConsoleCaptureResult result = ConsoleCapture.Start("git", args);
+                PrintLine(result.OutputMessage);
+                PrintBlank();
+            }
+            finally
+            {
+                Directory.SetCurrentDirectory(currentDir);
+            }
         }
     }
 }
