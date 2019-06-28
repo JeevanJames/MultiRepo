@@ -7,10 +7,10 @@ Extensible command-line utility to manage multi-repository projects
 mr init
     Initializes a new MultiRepo project. Use the repo commands to manage repositories under this project.
 
-mr repo add|remove|list
+mr repos add|remove|list
     Adds, removes or lists the repositories for a project
 	
-mr repo tag add|remove|list
+mr repos tags add|remove|list
     Adds, removes or lists the tags of a repository under a project.
 
 mr plugin install|uninstall|update|list
