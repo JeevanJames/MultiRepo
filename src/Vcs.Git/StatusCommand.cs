@@ -22,18 +22,43 @@ namespace Vcs.Git
 
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {
-            PrintLine($"{Cyan}{directory}");
+            PrintLine($"{Cyan}{relativeDir}");
 
             var options = new StatusOptions
             {
                 IncludeIgnored = IncludeIgnored,
                 IncludeUntracked = IncludeUntracked,
+                Show = StatusShowOption.IndexAndWorkDir,
+                DetectRenamesInIndex = true,
+                DetectRenamesInWorkDir = true,
             };
             RepositoryStatus status = repo.RetrieveStatus(options);
             foreach (StatusEntry statusItem in status)
-                PrintLine($"{Magenta}[{statusItem.State}] {Reset}{statusItem.FilePath}");
+            {
+                PrintLine($"{statusItem.HeadToIndexRenameDetails}, {statusItem.IndexToWorkDirRenameDetails}");
+                if (!Statuses.TryGetValue(statusItem.State, out string statusStr))
+                    statusStr = "?????";
+                PrintLine($"{Magenta}[{statusStr}] {Reset}{statusItem.FilePath}");
+            }
             PrintBlank();
         }
+
+        private static readonly IDictionary<FileStatus, string> Statuses = new Dictionary<FileStatus, string>
+        {
+            [FileStatus.NewInIndex] = "A-Idx",
+            [FileStatus.ModifiedInIndex] = "M-Idx",
+            [FileStatus.DeletedFromIndex] = "D-Idx",
+            [FileStatus.RenamedInIndex] = "R-Idx",
+            [FileStatus.TypeChangeInIndex] = "T-Idx",
+            [FileStatus.NewInWorkdir] = "A-Wdr",
+            [FileStatus.ModifiedInWorkdir] = "M-Wdr",
+            [FileStatus.DeletedFromWorkdir] = "D-Wdr",
+            [FileStatus.RenamedInWorkdir] = "R-Wdr",
+            [FileStatus.TypeChangeInWorkdir] = "T-Wdr",
+            [FileStatus.Unreadable] = "Unrdb",
+            [FileStatus.Ignored] = "Ignrd",
+            [FileStatus.Conflicted] = "Conft",
+        };
 
         protected override IEnumerable<Arg> GetArgs()
         {
