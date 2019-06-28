@@ -1,5 +1,9 @@
 {
   "profiles": {
+    "Branches": {
+      "commandName": "Project",
+      "commandLineArgs": "branches"
+    },
     "Clone": {
       "commandName": "Project",
       "commandLineArgs": "clone https://github.com/JeevanJames/_project.git -r D:\\Temp\\MyProjects"

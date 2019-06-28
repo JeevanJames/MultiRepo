@@ -3,6 +3,7 @@ using System.Linq;
 
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
+using ConsoleFx.ConsoleExtensions;
 using LibGit2Sharp;
 
 using static ConsoleFx.ConsoleExtensions.Clr;
@@ -22,8 +23,6 @@ namespace Vcs.Git
 
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {
-            PrintLine($"{Cyan}{relativeDir}");
-
             var options = new StatusOptions
             {
                 IncludeIgnored = IncludeIgnored,
@@ -33,32 +32,48 @@ namespace Vcs.Git
                 DetectRenamesInWorkDir = true,
             };
             RepositoryStatus status = repo.RetrieveStatus(options);
+            if (!status.Any())
+                return;
+
+            PrintLine($"{Cyan}{relativeDir}");
+
             foreach (StatusEntry statusItem in status)
             {
-                PrintLine($"{statusItem.HeadToIndexRenameDetails}, {statusItem.IndexToWorkDirRenameDetails}");
-                if (!Statuses.TryGetValue(statusItem.State, out string statusStr))
-                    statusStr = "?????";
-                PrintLine($"{Magenta}[{statusStr}] {Reset}{statusItem.FilePath}");
+                ColorString statusStr = Statuses
+                    .Where(s => (statusItem.State & s.status) == s.status)
+                    .Aggregate(new ColorString("    "), (acc, s) => acc.Text(s.display, s.color));
+                statusStr = statusStr.Text($" {statusItem.FilePath}", CColor.Reset);
+                PrintLine(statusStr);
+                if (statusItem.State == FileStatus.RenamedInIndex)
+                {
+                    RenameDetails details = statusItem.HeadToIndexRenameDetails;
+                    PrintLine($"      {details.OldFilePath} => {details.NewFilePath} (Similarity: {details.Similarity})");
+                }
+                if (statusItem.State == FileStatus.RenamedInWorkdir)
+                {
+                    RenameDetails details = statusItem.IndexToWorkDirRenameDetails;
+                    PrintLine($"      {details.OldFilePath} => {details.NewFilePath} (Similarity: {details.Similarity})");
+                }
             }
-            PrintBlank();
         }
 
-        private static readonly IDictionary<FileStatus, string> Statuses = new Dictionary<FileStatus, string>
-        {
-            [FileStatus.NewInIndex] = "A-Idx",
-            [FileStatus.ModifiedInIndex] = "M-Idx",
-            [FileStatus.DeletedFromIndex] = "D-Idx",
-            [FileStatus.RenamedInIndex] = "R-Idx",
-            [FileStatus.TypeChangeInIndex] = "T-Idx",
-            [FileStatus.NewInWorkdir] = "A-Wdr",
-            [FileStatus.ModifiedInWorkdir] = "M-Wdr",
-            [FileStatus.DeletedFromWorkdir] = "D-Wdr",
-            [FileStatus.RenamedInWorkdir] = "R-Wdr",
-            [FileStatus.TypeChangeInWorkdir] = "T-Wdr",
-            [FileStatus.Unreadable] = "Unrdb",
-            [FileStatus.Ignored] = "Ignrd",
-            [FileStatus.Conflicted] = "Conft",
-        };
+        private static readonly IList<(FileStatus status, string display, CColor color)> Statuses =
+            new List<(FileStatus, string, CColor)>
+            {
+                (FileStatus.NewInIndex, "A", CColor.Green),
+                (FileStatus.ModifiedInIndex, "M", CColor.Green),
+                (FileStatus.DeletedFromIndex, "D", CColor.Green),
+                (FileStatus.RenamedInIndex, "R", CColor.Green),
+                (FileStatus.TypeChangeInIndex, "T", CColor.Green),
+                (FileStatus.NewInWorkdir, "A", CColor.Yellow),
+                (FileStatus.ModifiedInWorkdir, "M", CColor.Yellow),
+                (FileStatus.DeletedFromWorkdir, "D", CColor.Yellow),
+                (FileStatus.RenamedInWorkdir, "R", CColor.Yellow),
+                (FileStatus.TypeChangeInWorkdir, "T", CColor.Yellow),
+                (FileStatus.Unreadable, "U", CColor.DkYellow),
+                (FileStatus.Ignored, "I", CColor.Gray),
+                (FileStatus.Conflicted, "C", CColor.Red),
+            };
 
         protected override IEnumerable<Arg> GetArgs()
         {
