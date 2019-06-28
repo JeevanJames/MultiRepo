@@ -1,7 +1,7 @@
 ﻿using System;
 
 using ConsoleFx.CmdLine;
-
+using ConsoleFx.ConsoleExtensions;
 using LibGit2Sharp;
 
 namespace Vcs.Git
@@ -11,10 +11,11 @@ namespace Vcs.Git
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {
+            ConsoleEx.PrintLine($"{Clr.Cyan}{relativeDir}");
             foreach (var b in repo.Branches)
             {
-                Console.WriteLine($"Friendly name: {b.FriendlyName}");
-                Console.WriteLine($"Current branch: {b.IsCurrentRepositoryHead}");
+                Console.WriteLine($"    Friendly name: {b.FriendlyName}");
+                Console.WriteLine($"    Current branch: {b.IsCurrentRepositoryHead}");
             }
         }
     }

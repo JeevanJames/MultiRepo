@@ -32,10 +32,36 @@ namespace Vcs.Git
                 DetectRenamesInWorkDir = true,
             };
             RepositoryStatus status = repo.RetrieveStatus(options);
-            if (!status.Any())
-                return;
 
             PrintLine($"{Cyan}{relativeDir}");
+
+            Branch currentBranch = repo.Branches.FirstOrDefault(b => b.IsCurrentRepositoryHead && !b.IsRemote);
+            var branchStr = new ColorString("    ## ").Green(currentBranch.FriendlyName);
+            if (currentBranch.IsTracking)
+            {
+                branchStr = branchStr
+                    .Reset("...")
+                    .Red(currentBranch.TrackedBranch.FriendlyName);
+
+                if (currentBranch.TrackingDetails.AheadBy.HasValue)
+                {
+                    branchStr = branchStr
+                        .Reset(" [ahead: ")
+                        .Green(currentBranch.TrackingDetails.AheadBy.Value.ToString())
+                        .Reset("]");
+                }
+                else if (currentBranch.TrackingDetails.BehindBy.HasValue)
+                {
+                    branchStr = branchStr
+                        .Reset(" [behind: ")
+                        .Red(currentBranch.TrackingDetails.BehindBy.Value.ToString())
+                        .Reset("]");
+                }
+            }
+            PrintLine(branchStr);
+
+            if (!status.Any())
+                return;
 
             foreach (StatusEntry statusItem in status)
             {
