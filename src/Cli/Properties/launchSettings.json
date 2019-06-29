@@ -22,7 +22,7 @@
     },
     "Pull": {
       "commandName": "Project",
-      "commandLineArgs": "pull --tags library"
+      "commandLineArgs": "pull"
     },
     "Repos-List": {
       "commandName": "Project",
