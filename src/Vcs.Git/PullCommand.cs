@@ -35,10 +35,11 @@ namespace Vcs.Git
                         {
                             fetchProgress = ProgressBar(new ProgressBarSpec
                             {
+                                MaxValue = progress.TotalObjects,
                                 Format = "    Fetching... <<bar>> <<percentage>> (<<value>>/<<max>>)"
-                            }, style: ProgressBarStyle.Dots);
+                            }, style: ProgressBarStyle.Dots); ;
                         }
-                        fetchProgress.Value = (progress.ReceivedObjects * 100) / progress.TotalObjects;
+                        fetchProgress.Value = progress.ReceivedObjects * 100;
                         return true;
                     }
                 },
@@ -50,12 +51,13 @@ namespace Vcs.Git
                         {
                             checkoutProgress = ProgressBar(new ProgressBarSpec
                             {
+                                MaxValue = total,
                                 Format = "    Checkout... <<bar>> <<percentage>> (<<value>>/<<max>>)"
                             }, style: ProgressBarStyle.Dots);
                         }
                         if (checkoutStatus is null)
                             checkoutStatus = StatusLine();
-                        checkoutProgress.Value = (completed * 100) / total;
+                        checkoutProgress.Value = completed;
                         checkoutStatus.Status = path;
                     }
                 }
