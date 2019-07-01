@@ -20,15 +20,9 @@ namespace Vcs.Git
         {
             PrintLine($"{Cyan}{relativeDir}");
 
-            ProgressBar fetchProgress = ProgressBar(new ProgressBarSpec
-            {
-                Format = "Fetching... <<bar>> <<percentage>> (<<value>>/<<max>>)"
-            }, style: ProgressBarStyle.Dots);
-            ProgressBar checkoutProgress = ProgressBar(new ProgressBarSpec
-            {
-                Format = "Checkout... <<bar>> <<percentage>> (<<value>>/<<max>>)"
-            }, style: ProgressBarStyle.Dots);
-            StatusLine checkoutStatus = StatusLine();
+            ProgressBar fetchProgress = null;
+            ProgressBar checkoutProgress = null;
+            StatusLine checkoutStatus = null;
 
             var signature = new Signature("Multi Repo", "no-reply@jeevanjames.com", DateTimeOffset.Now);
             var options = new PullOptions
@@ -37,6 +31,13 @@ namespace Vcs.Git
                 {
                     OnTransferProgress = progress =>
                     {
+                        if (fetchProgress is null)
+                        {
+                            fetchProgress = ProgressBar(new ProgressBarSpec
+                            {
+                                Format = "    Fetching... <<bar>> <<percentage>> (<<value>>/<<max>>)"
+                            }, style: ProgressBarStyle.Dots);
+                        }
                         fetchProgress.Value = (progress.ReceivedObjects * 100) / progress.TotalObjects;
                         return true;
                     }
@@ -45,6 +46,15 @@ namespace Vcs.Git
                 {
                     OnCheckoutProgress = (path, completed, total) =>
                     {
+                        if (checkoutProgress is null)
+                        {
+                            checkoutProgress = ProgressBar(new ProgressBarSpec
+                            {
+                                Format = "    Checkout... <<bar>> <<percentage>> (<<value>>/<<max>>)"
+                            }, style: ProgressBarStyle.Dots);
+                        }
+                        if (checkoutStatus is null)
+                            checkoutStatus = StatusLine();
                         checkoutProgress.Value = (completed * 100) / total;
                         checkoutStatus.Status = path;
                     }
