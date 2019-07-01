@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
+using ConsoleFx.ConsoleExtensions;
 
 using LibGit2Sharp;
 
@@ -17,6 +19,17 @@ namespace Vcs.Git
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {
             PrintLine($"{Cyan}{relativeDir}");
+
+            ProgressBar fetchProgress = ProgressBar(new ProgressBarSpec
+            {
+                Format = "Fetching... <<bar>> <<percentage>> (<<value>>/<<max>>)"
+            }, style: ProgressBarStyle.Dots);
+            ProgressBar checkoutProgress = ProgressBar(new ProgressBarSpec
+            {
+                Format = "Checkout... <<bar>> <<percentage>> (<<value>>/<<max>>)"
+            }, style: ProgressBarStyle.Dots);
+            StatusLine checkoutStatus = StatusLine();
+
             var signature = new Signature("Multi Repo", "no-reply@jeevanjames.com", DateTimeOffset.Now);
             var options = new PullOptions
             {
@@ -24,20 +37,16 @@ namespace Vcs.Git
                 {
                     OnTransferProgress = progress =>
                     {
-                        PrintLine($"    Fetch {progress.ReceivedObjects} / {progress.TotalObjects}");
+                        fetchProgress.Value = (progress.ReceivedObjects * 100) / progress.TotalObjects;
                         return true;
                     }
                 },
                 MergeOptions = new MergeOptions
                 {
-                    OnCheckoutNotify = (path, flags) =>
-                    {
-                        PrintLine($"    Checkout Notify: {path} ({flags})");
-                        return true;
-                    },
                     OnCheckoutProgress = (path, completed, total) =>
                     {
-                        PrintLine($"    Checkout progress: {path} {completed} / {total}");
+                        checkoutProgress.Value = (completed * 100) / total;
+                        checkoutStatus.Status = path;
                     }
                 }
             };

@@ -32,8 +32,9 @@ namespace Vcs.Git
                 DetectRenamesInWorkDir = true,
             };
             RepositoryStatus status = repo.RetrieveStatus(options);
+            bool hasChanges = status.Any();
 
-            PrintLine($"{Cyan}{relativeDir}");
+            PrintLine($"{(hasChanges ? Cyan : White)}{relativeDir}");
 
             Branch currentBranch = repo.Branches.FirstOrDefault(b => b.IsCurrentRepositoryHead && !b.IsRemote);
             var branchStr = new ColorString("    ## ").Green(currentBranch.FriendlyName);
@@ -68,7 +69,7 @@ namespace Vcs.Git
             }
             PrintLine(branchStr);
 
-            if (!status.Any())
+            if (!hasChanges)
                 return;
 
             foreach (StatusEntry statusItem in status)
@@ -78,12 +79,12 @@ namespace Vcs.Git
                     .Aggregate(new ColorString("    "), (acc, s) => acc.Text(s.display, s.color));
                 statusStr = statusStr.Text($" {statusItem.FilePath}", CColor.Reset);
                 PrintLine(statusStr);
-                if (statusItem.State == FileStatus.RenamedInIndex)
+                if ((statusItem.State & FileStatus.RenamedInIndex) == FileStatus.RenamedInIndex)
                 {
                     RenameDetails details = statusItem.HeadToIndexRenameDetails;
                     PrintLine($"      {details.OldFilePath} => {details.NewFilePath} (Similarity: {details.Similarity})");
                 }
-                if (statusItem.State == FileStatus.RenamedInWorkdir)
+                if ((statusItem.State & FileStatus.RenamedInWorkdir) == FileStatus.RenamedInWorkdir)
                 {
                     RenameDetails details = statusItem.IndexToWorkDirRenameDetails;
                     PrintLine($"      {details.OldFilePath} => {details.NewFilePath} (Similarity: {details.Similarity})");
