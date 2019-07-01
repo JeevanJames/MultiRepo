@@ -36,7 +36,7 @@ namespace Vcs.Git
                             fetchProgress = ProgressBar(new ProgressBarSpec
                             {
                                 MaxValue = progress.TotalObjects,
-                                Format = "    Fetching... <<bar>> <<percentage>> (<<value>>/<<max>>)"
+                                Format = "    Fetching: [<<bar>>] <<percentage>> (<<value>>/<<max>>)"
                             }, style: ProgressBarStyle.Dots); ;
                         }
                         fetchProgress.Value = progress.ReceivedObjects * 100;
@@ -52,7 +52,7 @@ namespace Vcs.Git
                             checkoutProgress = ProgressBar(new ProgressBarSpec
                             {
                                 MaxValue = total,
-                                Format = "    Checkout... <<bar>> <<percentage>> (<<value>>/<<max>>)"
+                                Format = "    Checkout: [<<bar>>] <<percentage>> (<<value>>/<<max>>)"
                             }, style: ProgressBarStyle.Dots);
                         }
                         if (checkoutStatus is null)
