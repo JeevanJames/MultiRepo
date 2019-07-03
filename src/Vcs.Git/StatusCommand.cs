@@ -4,6 +4,7 @@ using System.Linq;
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
 using ConsoleFx.ConsoleExtensions;
+
 using LibGit2Sharp;
 
 using static ConsoleFx.ConsoleExtensions.Clr;

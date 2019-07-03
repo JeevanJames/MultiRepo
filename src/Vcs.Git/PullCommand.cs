@@ -58,7 +58,7 @@ namespace Vcs.Git
                         if (checkoutStatus is null)
                             checkoutStatus = StatusLine();
                         checkoutProgress.Value = completed;
-                        checkoutStatus.Status = path;
+                        checkoutStatus.Status = $"      {path}";
                     }
                 }
             };

@@ -10,7 +10,7 @@
     },
     "Exec": {
       "commandName": "Project",
-      "commandLineArgs": "exec -- git status -bs"
+      "commandLineArgs": "exec -- dotnet build"
     },
     "Help": {
       "commandName": "Project",
