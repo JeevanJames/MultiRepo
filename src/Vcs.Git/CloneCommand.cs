@@ -122,13 +122,6 @@ namespace Vcs.Git
             }, style: ProgressBarStyle.Shaded);
 
             var cloneOptions = new CloneOptions();
-            if (!string.IsNullOrEmpty(Branch))
-                cloneOptions.BranchName = Branch;
-            //cloneOptions.OnProgress += status =>
-            //{
-            //    PrintLine(status);
-            //    return true;
-            //};
             cloneOptions.OnCheckoutProgress += (path, completedSteps, totalSteps) =>
             {
                 progressBar.Value = (completedSteps * 100) / totalSteps;
