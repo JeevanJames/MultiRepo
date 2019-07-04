@@ -26,6 +26,10 @@ namespace Core.Commands
         [Help("Only operate on the repository of the current directory.")]
         public bool OnlyMe { get; set; }
 
+        [Option("repo")]
+        [Help("Regular expression to filter repositories based on their relative directory path.")]
+        public Regex RepoNamePattern { get; set; }
+
         public IDictionary<string, RepositoryDefinition> FilteredRepositories =>
             _filteredRepositories ?? (_filteredRepositories = GetFilteredRepositories().ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
 
@@ -45,6 +49,10 @@ namespace Core.Commands
 
                 yield return new Option("only-me")
                     .UsedAsFlag(optional: true);
+
+                yield return new Option("repo")
+                    .UsedAsSingleParameter()
+                    .TypedAs(value => new Regex(value));
             }
         }
 
@@ -85,6 +93,9 @@ namespace Core.Commands
                 repos = repos.Where(r => r.Value.HasAllTags(Tags));
             else if (ExcludedTags.Count > 0)
                 repos = repos.Where(r => !r.Value.HasAnyTag(ExcludedTags));
+
+            if (RepoNamePattern != null)
+                repos = repos.Where(r => RepoNamePattern.IsMatch(r.Key));
 
             return repos;
         }

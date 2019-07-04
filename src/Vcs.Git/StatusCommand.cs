@@ -12,22 +12,22 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Vcs.Git
 {
-    [Command("status")]
+    [Command("status", typeof(VcsCommand))]
     [Help("Displays the status for each repository.")]
     public sealed class StatusCommand : GitCommand
     {
         [Option("include-ignored")]
         public bool IncludeIgnored { get; set; }
 
-        [Option("include-untracked")]
-        public bool IncludeUntracked { get; set; }
+        [Option("exclude-untracked")]
+        public bool ExcludeUntracked { get; set; }
 
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {
             var options = new StatusOptions
             {
                 IncludeIgnored = IncludeIgnored,
-                IncludeUntracked = IncludeUntracked,
+                IncludeUntracked = !ExcludeUntracked,
                 Show = StatusShowOption.IndexAndWorkDir,
                 DetectRenamesInIndex = true,
                 DetectRenamesInWorkDir = true,
@@ -119,7 +119,7 @@ namespace Vcs.Git
             {
                 yield return new Option("include-ignored", "i")
                     .UsedAsFlag();
-                yield return new Option("include-untracked", "u")
+                yield return new Option("exclude-untracked", "u")
                     .UsedAsFlag();
             }
         }

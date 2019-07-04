@@ -9,7 +9,7 @@ using LibGit2Sharp;
 
 namespace Vcs.Git
 {
-    [Command("branches")]
+    [Command("branches", typeof(VcsCommand))]
     public sealed class BranchCommand : GitCommand
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)

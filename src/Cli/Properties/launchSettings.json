@@ -2,7 +2,7 @@
   "profiles": {
     "Branches": {
       "commandName": "Project",
-      "commandLineArgs": "branches"
+      "commandLineArgs": "vcs branches"
     },
     "Clone": {
       "commandName": "Project",
@@ -14,7 +14,7 @@
     },
     "Help": {
       "commandName": "Project",
-      "commandLineArgs": "--help"
+      "commandLineArgs": "vcs --help"
     },
     "GitExec": {
       "commandName": "Project",
@@ -22,15 +22,15 @@
     },
     "Pull": {
       "commandName": "Project",
-      "commandLineArgs": "pull"
+      "commandLineArgs": "vcs pull"
     },
     "Repos-List": {
       "commandName": "Project",
-      "commandLineArgs": "repos list --tags library"
+      "commandLineArgs": "repos list --repo Code"
     },
     "Status": {
       "commandName": "Project",
-      "commandLineArgs": "status -u"
+      "commandLineArgs": "vcs status -u"
     },
     "Tags-List": {
       "commandName": "Project",

@@ -14,7 +14,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Vcs.Git
 {
-    [Command("git")]
+    [Command("git", typeof(VcsCommand))]
     [Help("Executes a Git command for each repository.")]
     public sealed class GitExecCommand : RepoCommand
     {

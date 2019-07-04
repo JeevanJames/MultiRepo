@@ -12,7 +12,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Vcs.Git
 {
-    [Command("pull")]
+    [Command("pull", typeof(VcsCommand))]
     [Help("Pulls latest updates from each repository.")]
     public sealed class PullCommand : GitCommand
     {
