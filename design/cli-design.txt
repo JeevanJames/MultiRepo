@@ -1,9 +1,12 @@
 mr tags list
+mr tags rename <name> <new name>
+mr tags remove|delete <name>...
 
 mr repos list
 mr repos add dir <dir> --tag <tag1> <tag2>
 mr repos add url <url> <dir> --tag <tag1> <tag2>
-mr repos remove <dir>
+mr repos remove|delete <dir>...
+mr repos move <dir> <new dir>
 
 mr clone <manifest repo url> [--branch <branch>]
 	[--root-dir <root dir>] [--manifest-dir <manifest dir>]
