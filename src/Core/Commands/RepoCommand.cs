@@ -27,8 +27,8 @@ namespace Core.Commands
         public bool OnlyMe { get; set; }
 
         [Option("repo")]
-        [Help("Regular expression to filter repositories based on their relative directory path.")]
-        public Regex RepoNamePattern { get; set; }
+        [Help("Operate on only repositories have names containing the specified case-insensitive string.")]
+        public string RepoName { get; set; }
 
         public IDictionary<string, RepositoryDefinition> FilteredRepositories =>
             _filteredRepositories ?? (_filteredRepositories = GetFilteredRepositories().ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
@@ -51,8 +51,7 @@ namespace Core.Commands
                     .UsedAsFlag(optional: true);
 
                 yield return new Option("repo")
-                    .UsedAsSingleParameter()
-                    .TypedAs(value => new Regex(value));
+                    .UsedAsSingleParameter();
             }
         }
 
@@ -94,8 +93,8 @@ namespace Core.Commands
             else if (ExcludedTags.Count > 0)
                 repos = repos.Where(r => !r.Value.HasAnyTag(ExcludedTags));
 
-            if (RepoNamePattern != null)
-                repos = repos.Where(r => RepoNamePattern.IsMatch(r.Key));
+            if (RepoName != null)
+                repos = repos.Where(r => r.Key.IndexOf(RepoName, StringComparison.OrdinalIgnoreCase) >= 0);
 
             return repos;
         }
