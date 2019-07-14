@@ -2,10 +2,9 @@
 using System.IO;
 using System.Linq;
 
-using ConsoleFx.Capture;
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
-
+using ConsoleFx.ConsoleExtensions;
 using Core;
 using Core.Commands;
 
@@ -37,9 +36,12 @@ namespace Vcs.Git
             try
             {
                 PrintLine($"{Cyan}{relativeDir}");
-                string args = string.Join(" ", GitArgs.ToArray());
-                ConsoleCaptureResult result = ConsoleCapture.Start("git", args);
-                PrintLine(result.OutputMessage);
+
+                var cc = new ConsoleCapture("git", GitArgs.ToArray())
+                    .OnOutput(line => PrintLine(line))
+                    .OnError(line => PrintLine($"{Red}{line}"));
+                cc.Start();
+
                 PrintBlank();
             }
             finally
