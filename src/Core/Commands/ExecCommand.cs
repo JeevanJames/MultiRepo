@@ -15,6 +15,7 @@ namespace Core.Commands
     [Help("Executes a command for each repository.")]
     public sealed class ExecCommand : RepoCommand
     {
+        [Help("args", "Commands to run.")]
         public IList<string> ExecArgs { get; set; }
 
         protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)

@@ -14,7 +14,7 @@
     },
     "Help": {
       "commandName": "Project",
-      "commandLineArgs": "vcs --help"
+      "commandLineArgs": "exec --help"
     },
     "GitExec": {
       "commandName": "Project",

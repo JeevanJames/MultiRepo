@@ -6,6 +6,7 @@ using System.Reflection;
 
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Program.HelpBuilders;
 
 namespace MultiRepo.Cli
 {
@@ -22,7 +23,11 @@ namespace MultiRepo.Cli
             Trace.AutoFlush = true;
             //DebugOutput.Enable();
 
-            var program = new Program();
+            var program = new Program
+            {
+                HelpBuilder = new DefaultColorHelpBuilder("help", "h"),
+                VerifyHelp = true,
+            };
             Assembly core = Assembly.Load("Core");
             Assembly vcsGit = Assembly.Load("Vcs.Git");
             program.ScanAssembliesForCommands(core, vcsGit);
