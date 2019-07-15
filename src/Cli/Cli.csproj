@@ -6,7 +6,7 @@
     <AssemblyName>mr</AssemblyName>
     <RootNamespace>MultiRepo.Cli</RootNamespace>
     <!-- Package details -->
-    <PackageId>dotnet-mr</PackageId>
+    <PackageId>dotnet-multirepo</PackageId>
     <Version>0.0.1</Version>
     <Authors>Jeevan James</Authors>
     <Company>Jeevan James</Company>
