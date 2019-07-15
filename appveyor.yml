@@ -15,4 +15,4 @@ deploy_script:
 - pwsh: >-
     dotnet pack src/Cli/Cli.csproj -c Release-Tool /p:Version=$env:APPVEYOR_BUILD_VERSION
 
-    dotnet nuget push src/Cli/bin/Release-Tool/dotnet-mr.$env:APPVEYOR_BUILD_VERSION.nupkg -s $env:MYGET_FEED -k $env:MYGET_API_KEY
+    dotnet nuget push src/Cli/bin/Release-Tool/dotnet-multirepo.$env:APPVEYOR_BUILD_VERSION.nupkg -s $env:MYGET_FEED -k $env:MYGET_API_KEY
