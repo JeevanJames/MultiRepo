@@ -26,7 +26,9 @@ namespace MultiRepo.Cli
             var program = new Program
             {
                 HelpBuilder = new DefaultColorHelpBuilder("help", "h"),
+#if DEBUG
                 VerifyHelp = true,
+#endif
             };
             Assembly core = Assembly.Load("Core");
             Assembly vcsGit = Assembly.Load("Vcs.Git");
