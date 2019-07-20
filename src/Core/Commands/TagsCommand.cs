@@ -20,6 +20,9 @@ namespace Core.Commands
         [Option("pretty")]
         public bool Prettify { get; set; }
 
+        //[Option("show-repos")]
+        //public bool ShowRepos { get; set; }
+
         protected override IEnumerable<Arg> GetArgs()
         {
             return base.GetArgs().Concat(GetMyArgs());
@@ -28,6 +31,8 @@ namespace Core.Commands
             {
                 yield return new Option("pretty", "p")
                     .UsedAsFlag();
+                //yield return new Option("show-repos")
+                //    .UsedAsFlag();
             }
         }
 

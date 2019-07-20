@@ -14,7 +14,7 @@
     },
     "Help": {
       "commandName": "Project",
-      "commandLineArgs": "exec --help"
+      "commandLineArgs": "tags list --help"
     },
     "GitExec": {
       "commandName": "Project",

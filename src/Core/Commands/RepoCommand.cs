@@ -30,6 +30,10 @@ namespace Core.Commands
         [Help("Operate on only repositories have names containing the specified case-insensitive string.")]
         public string RepoName { get; set; }
 
+        [Option("exclude-repo")]
+        [Help("Do not operate on repositories having the names containing the specified case-insensitive string.")]
+        public string ExcludeRepoName { get; set; }
+
         public IDictionary<string, RepositoryDefinition> FilteredRepositories =>
             _filteredRepositories ?? (_filteredRepositories = GetFilteredRepositories().ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
 
@@ -39,18 +43,21 @@ namespace Core.Commands
 
             IEnumerable<Arg> GetMyArgs()
             {
-                yield return new Option("tags")
+                yield return new Option("tags", "it")
                     .UsedAsUnlimitedOccurrencesAndParameters(optional: true)
                     .ValidateWithRegex(TagPattern);
 
-                yield return new Option("exclude-tags")
+                yield return new Option("exclude-tags", "et")
                     .UsedAsUnlimitedOccurrencesAndParameters(optional: true)
                     .ValidateWithRegex(TagPattern);
 
-                yield return new Option("only-me")
+                yield return new Option("only-me", "me")
                     .UsedAsFlag(optional: true);
 
-                yield return new Option("repo")
+                yield return new Option("repo", "ir")
+                    .UsedAsSingleParameter();
+
+                yield return new Option("exclude-repo", "er")
                     .UsedAsSingleParameter();
             }
         }
@@ -95,6 +102,8 @@ namespace Core.Commands
 
             if (RepoName != null)
                 repos = repos.Where(r => r.Key.IndexOf(RepoName, StringComparison.OrdinalIgnoreCase) >= 0);
+            else if (ExcludeRepoName != null)
+                repos = repos.Where(r => r.Key.IndexOf(ExcludeRepoName, StringComparison.OrdinalIgnoreCase) < 0);
 
             return repos;
         }
