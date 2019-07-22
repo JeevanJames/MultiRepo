@@ -32,6 +32,14 @@ mr clone <manifest repo url> [--branch <branch>]
 	  Directory in the repository where to get the manifest file.
 	  Default: root directory.
 
+mr clone [--prune]
+
+	Runs the clone command on an existing project to clone additional repositories added since the last clone.
+	This command is idempotent; running it multiple times should not have adverse side effects.
+	
+	--prune, -p
+	Removes any folders that are not specified in the manifest.
+
 mr init [<root dir>] [--manifest-dir <manifest dir>] [--discover]
 
 	Initializes an empty project at the specied root dir. This creates the manifest directory and
