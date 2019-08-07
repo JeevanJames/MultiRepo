@@ -8,7 +8,7 @@ using ConsoleFx.ConsoleExtensions;
 
 using Core;
 using Core.Commands;
-
+using Core.Vcs.Commands;
 using static ConsoleFx.ConsoleExtensions.Clr;
 using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 

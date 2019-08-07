@@ -4,7 +4,7 @@ using System.Linq;
 
 using ConsoleFx.CmdLine;
 using ConsoleFx.ConsoleExtensions;
-
+using Core.Vcs.Commands;
 using LibGit2Sharp;
 
 namespace Vcs.Git

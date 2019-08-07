@@ -18,7 +18,7 @@ namespace Core
     {
         private IList<string> _tags;
 
-        [JsonProperty("type")]
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; internal set; }
 
         [JsonProperty("repo")]

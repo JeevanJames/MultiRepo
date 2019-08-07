@@ -9,6 +9,7 @@ using ConsoleFx.CmdLine.Validators;
 using ConsoleFx.ConsoleExtensions;
 
 using Core;
+using Core.Vcs.Commands;
 
 using LibGit2Sharp;
 
@@ -19,7 +20,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Vcs.Git
 {
-    [Command("clone")]
+    [Command("clone", typeof(ProjectCommand))]
     [Help("Clones a project to the local system.")]
     [PushDirectory]
     public sealed class CloneCommand : Command

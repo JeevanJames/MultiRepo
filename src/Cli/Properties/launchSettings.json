@@ -4,9 +4,9 @@
       "commandName": "Project",
       "commandLineArgs": "vcs branches"
     },
-    "Clone": {
+    "Clean": {
       "commandName": "Project",
-      "commandLineArgs": "clone https://github.com/JeevanJames/_project.git -r D:\\Temp\\MyProjects"
+      "commandLineArgs": "vcs clean"
     },
     "Exec": {
       "commandName": "Project",
@@ -19,6 +19,14 @@
     "GitExec": {
       "commandName": "Project",
       "commandLineArgs": "git -- status -bs"
+    },
+    "Project Clone": {
+      "commandName": "Project",
+      "commandLineArgs": "p clone https://github.com/JeevanJames/_project.git -r D:\\Temp\\MyProjects"
+    },
+    "Project List": {
+      "commandName": "Project",
+      "commandLineArgs": "p list https://github.com/JeevanJames/_project.git"
     },
     "Pull": {
       "commandName": "Project",

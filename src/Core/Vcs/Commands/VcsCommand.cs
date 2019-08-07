@@ -1,8 +1,8 @@
 ﻿using ConsoleFx.CmdLine;
 
-namespace Vcs.Git
+namespace Core.Vcs.Commands
 {
-    [Command("vcs")]
+    [Command("vcs", "v")]
     public sealed class VcsCommand : AbstractCommand
     {
     }
