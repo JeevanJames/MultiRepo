@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 
 using ConsoleFx.CmdLine;
+using ConsoleFx.CmdLine.Program;
 using ConsoleFx.ConsoleExtensions;
+
 using Core.Vcs.Commands;
+
 using LibGit2Sharp;
 
 namespace Vcs.Git
 {
     [Command("branches", typeof(VcsCommand))]
+    [Help("Displays the branches and tracking details of each repository.")]
     public sealed class BranchCommand : GitCommand
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)

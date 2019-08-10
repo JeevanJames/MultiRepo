@@ -8,21 +8,18 @@ mr repos add url <url> <dir> --tag <tag1> <tag2>
 mr repos remove|delete <dir>...
 mr repos move <dir> <new dir>
 
-mr clone <manifest repo url> [--branch <branch>]
-	[--root-dir <root dir>] [--manifest-dir <manifest dir>]
-	[--repo-dir <repo dir>]
+mr project clone <manifest repo url> [<root dir>] [--branch <branch>]
+	[--manifest-dir <manifest dir>] [--repo-dir <repo dir>]
 	
 	Clones a project onto the local system by specifying the location of the manifest repository.
 
 	<manifest repo url> Clone URL of the manifest repository.
+
+	<root dir>          Root directory of the project. Defaults to current directory.
 	
 	--branch, -b <branch>
 	  Branch to checkout from the manifest repository.
 	  Default: default branch.
-	
-	--root-dir, -r <root dir>
-	  Root directory of the project.
-	  Default: current directory.
 	
 	--manifest-dir <manifest dir>
 	  Relative directory from the root folder to clone the manifest repository into.
@@ -32,7 +29,7 @@ mr clone <manifest repo url> [--branch <branch>]
 	  Directory in the repository where to get the manifest file.
 	  Default: root directory.
 
-mr clone [--prune]
+mr project prune
 
 	Runs the clone command on an existing project to clone additional repositories added since the last clone.
 	This command is idempotent; running it multiple times should not have adverse side effects.
@@ -40,7 +37,7 @@ mr clone [--prune]
 	--prune, -p
 	Removes any folders that are not specified in the manifest.
 
-mr init [<root dir>] [--manifest-dir <manifest dir>] [--discover]
+mr project init [<root dir>] [--manifest-dir <manifest dir>] [--discover]
 
 	Initializes an empty project at the specied root dir. This creates the manifest directory and
 	project root marker.
@@ -54,8 +51,20 @@ mr init [<root dir>] [--manifest-dir <manifest dir>] [--discover]
 	--discover
 	  Searches under the root directory for any Git repositories. If found, add them to the project.
 
-mr push
+mr vcs commit <message> [--push]
 
 	Pushes any changes in all the repositories under the project (including the manifest) to the server.
 
-mr pull
+mr vcs pull
+mr vcs branches
+mr vcs clean
+
+mr vcs status [--include-ignored] [--exclude-untracked]
+
+	Displays the status of all repositories under the project.
+
+	--include-ignored, -i
+	  Includes ignored files in the output.
+
+	--exclude-untracked, -u
+	  Untracked files are displayed by default. Specify this flag to exclude them from display.

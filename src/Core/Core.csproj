@@ -5,13 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.167" />
-    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.167" />
+    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.168" />
+    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.168" />
+    <PackageReference Include="ConsoleTables" Version="2.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Vcs\Fx\" />
   </ItemGroup>
 
 </Project>

@@ -28,13 +28,12 @@ namespace Vcs.Git
         [Help("manifest repo url", "The clone URL of the repository that contains the project manifest.")]
         public Uri ManifestRepoUrl { get; set; }
 
+        [Help("The root directory of the project being cloned.")]
+        public DirectoryInfo RootDirectory { get; set; }
+
         [Option("branch")]
         [Help("The branch in the manifest repository to checkout. Defaults to the default branch.")]
         public string Branch { get; set; }
-
-        [Option("root-dir")]
-        [Help("The root directory of the project being cloned.")]
-        public DirectoryInfo RootDirectory { get; set; }
 
         [Option("manifest-dir")]
         [Help("The relative directory from the project root to clone the manifest repository to. Defaults to _project.")]
@@ -47,9 +46,16 @@ namespace Vcs.Git
         protected override int HandleCommand()
         {
             CreateRootDirectory();
-            CloneManifestRepo();
+
+            ProgressBar progressBar = ProgressBar(new ProgressBarSpec
+            {
+                Format = "Cloning repository... [<<bar>>] <<percentage>>%",
+            }, style: ProgressBarStyle.Shaded);
+
+            CloneManifestRepo(progressBar);
             CreateMarkerFile();
-            CloneRepos();
+            CloneRepos(progressBar);
+
             return 0;
         }
 
@@ -64,23 +70,13 @@ namespace Vcs.Git
                 throw new Exception($"Project root directory should be empty.");
         }
 
-        private void CloneManifestRepo()
+        private void CloneManifestRepo(ProgressBar progressBar)
         {
             string manifestRepoDir = Path.Combine(RootDirectory.FullName, ManifestDirectory);
-
-            ProgressBar progressBar = ProgressBar(new ProgressBarSpec
-            {
-                Format = "Cloning repository... [<<bar>>] <<percentage>>%",
-            }, style: ProgressBarStyle.Shaded);
 
             var cloneOptions = new CloneOptions();
             if (!string.IsNullOrEmpty(Branch))
                 cloneOptions.BranchName = Branch;
-            //cloneOptions.OnProgress += status =>
-            //{
-            //    PrintLine($"{Magenta}{status}");
-            //    return true;
-            //};
             cloneOptions.OnCheckoutProgress += (path, completedSteps, totalSteps) =>
             {
                 progressBar.Value = (completedSteps * 100) / totalSteps;
@@ -108,7 +104,7 @@ namespace Vcs.Git
             File.WriteAllText(markerFilePath, json);
         }
 
-        private void CloneRepos()
+        private void CloneRepos(ProgressBar progressBar)
         {
             string manifestPath = Path.Combine(RootDirectory.FullName, ManifestDirectory, "mr.manifest.json");
             if (!File.Exists(manifestPath))
@@ -117,15 +113,16 @@ namespace Vcs.Git
             string manifestJson = File.ReadAllText(manifestPath);
             Manifest manifest = JsonConvert.DeserializeObject<Manifest>(manifestJson);
 
-            ProgressBar progressBar = ProgressBar(new ProgressBarSpec
-            {
-                Format = "Cloning repository... [<<bar>>] <<percentage>>%",
-            }, style: ProgressBarStyle.Shaded);
+            PrintBlank();
+
+            StatusLine currentUrl = StatusLine();
+            StatusLine currentDir = StatusLine();
 
             var cloneOptions = new CloneOptions();
             cloneOptions.OnCheckoutProgress += (path, completedSteps, totalSteps) =>
             {
-                progressBar.Value = (completedSteps * 100) / totalSteps;
+                progressBar.Max = totalSteps;
+                progressBar.Value = completedSteps;
             };
 
             PrintBlank();
@@ -133,9 +130,9 @@ namespace Vcs.Git
             {
                 progressBar.Value = 0;
                 string repoDir = Path.Combine(RootDirectory.FullName, repo.Key);
-                PrintLine($"{Cyan}Cloning {repo.Value.RepositoryLocation} to {repoDir}:");
+                currentUrl.Status = $"From: {Cyan}{repo.Value.RepositoryLocation}";
+                currentDir.Status = $"  To: {Magenta}{repoDir}";
                 Repository.Clone(repo.Value.RepositoryLocation, repoDir, cloneOptions);
-                PrintBlank();
             }
         }
 
@@ -145,14 +142,13 @@ namespace Vcs.Git
                 .ValidateAsUri(UriKind.Absolute)
                 .TypedAs<Uri>();
 
-            yield return new Option("branch", "b")
-                .UsedAsSingleParameter();
-
-            yield return new Option("root-dir", "r")
-                .UsedAsSingleParameter()
+            yield return new Argument(nameof(RootDirectory))
                 .ValidateAsDirectory()
                 .TypedAs(value => new DirectoryInfo(value))
                 .DefaultsTo(new DirectoryInfo("."));
+
+            yield return new Option("branch", "b")
+                .UsedAsSingleParameter();
 
             yield return new Option("manifest-dir", "m")
                 .UsedAsSingleParameter()

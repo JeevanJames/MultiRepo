@@ -1,13 +1,5 @@
 {
   "profiles": {
-    "Branches": {
-      "commandName": "Project",
-      "commandLineArgs": "vcs branches"
-    },
-    "Clean": {
-      "commandName": "Project",
-      "commandLineArgs": "vcs clean"
-    },
     "Exec": {
       "commandName": "Project",
       "commandLineArgs": "exec -- dotnet build"
@@ -16,33 +8,41 @@
       "commandName": "Project",
       "commandLineArgs": "tags list --help"
     },
-    "GitExec": {
+    "Git Exec": {
       "commandName": "Project",
       "commandLineArgs": "git -- status -bs"
     },
     "Project Clone": {
       "commandName": "Project",
-      "commandLineArgs": "p clone https://github.com/JeevanJames/_project.git -r D:\\Temp\\MyProjects"
+      "commandLineArgs": "p clone https://github.com/JeevanJames/_project.git D:\\Temp\\MyProjects2"
     },
     "Project List": {
       "commandName": "Project",
       "commandLineArgs": "p list https://github.com/JeevanJames/_project.git"
     },
-    "Pull": {
-      "commandName": "Project",
-      "commandLineArgs": "vcs pull"
-    },
-    "Repos-List": {
+    "Repos List": {
       "commandName": "Project",
       "commandLineArgs": "repos list --repo Code"
     },
-    "Status": {
-      "commandName": "Project",
-      "commandLineArgs": "vcs status -u"
-    },
-    "Tags-List": {
+    "Tags List": {
       "commandName": "Project",
       "commandLineArgs": "tags list"
+    },
+    "Vcs Branches": {
+      "commandName": "Project",
+      "commandLineArgs": "vcs branches"
+    },
+    "Vcs Clean": {
+      "commandName": "Project",
+      "commandLineArgs": "vcs clean"
+    },
+    "Vcs Pull": {
+      "commandName": "Project",
+      "commandLineArgs": "vcs pull"
+    },
+    "Vcs Status": {
+      "commandName": "Project",
+      "commandLineArgs": "vcs status -u"
     },
     "Version": {
       "commandName": "Project",
