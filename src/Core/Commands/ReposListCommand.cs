@@ -7,7 +7,7 @@ using ConsoleTables;
 
 namespace Core.Commands
 {
-    [Command("list", typeof(ReposCommand))]
+    [Command("list", "ls", ParentType = typeof(ReposCommand))]
     [Help("Lists all repositories under the current project.")]
     public sealed class ReposListCommand : RepoCommand
     {

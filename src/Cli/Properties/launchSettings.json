@@ -26,7 +26,7 @@
     },
     "Tags List": {
       "commandName": "Project",
-      "commandLineArgs": "tags list"
+      "commandLineArgs": "tags list --show-repos"
     },
     "Vcs Branches": {
       "commandName": "Project",
