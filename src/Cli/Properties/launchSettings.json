@@ -13,8 +13,8 @@
       "commandLineArgs": "git -- status -bs"
     },
     "Project Clone": {
-        "commandName": "Project",
-        "commandLineArgs": "p clone https://dev.azure.com/EurofinsDOP/Core/_git/projects C:\\Temp\\MyProjects2"
+      "commandName": "Project",
+      "commandLineArgs": "p clone https://github.com/JeevanJames/_project.git D:\\Temp\\MyProjects2"
     },
     "Project List": {
       "commandName": "Project",
