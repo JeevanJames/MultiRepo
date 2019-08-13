@@ -25,6 +25,8 @@ namespace Vcs.Git
     [PushDirectory]
     public sealed class CloneCommand : Command
     {
+        private Credentials _credentials;
+
         [Help("manifest repo url", "The clone URL of the repository that contains the project manifest.")]
         public Uri ManifestRepoUrl { get; set; }
 
@@ -74,13 +76,16 @@ namespace Vcs.Git
         {
             string manifestRepoDir = Path.Combine(RootDirectory.FullName, ManifestDirectory);
 
-            var cloneOptions = new CloneOptions();
+            var cloneOptions = new CloneOptions
+            {
+                CredentialsProvider = ProvideCredentials,
+                OnCheckoutProgress = (path, completedSteps, totalSteps) =>
+                {
+                    progressBar.Value = (completedSteps * 100) / totalSteps;
+                }
+            };
             if (!string.IsNullOrEmpty(Branch))
                 cloneOptions.BranchName = Branch;
-            cloneOptions.OnCheckoutProgress += (path, completedSteps, totalSteps) =>
-            {
-                progressBar.Value = (completedSteps * 100) / totalSteps;
-            };
 
             string result = Repository.Clone(ManifestRepoUrl.ToString(), manifestRepoDir, cloneOptions);
         }
@@ -118,11 +123,14 @@ namespace Vcs.Git
             StatusLine currentUrl = StatusLine();
             StatusLine currentDir = StatusLine();
 
-            var cloneOptions = new CloneOptions();
-            cloneOptions.OnCheckoutProgress += (path, completedSteps, totalSteps) =>
+            var cloneOptions = new CloneOptions
             {
-                progressBar.Max = totalSteps;
-                progressBar.Value = completedSteps;
+                CredentialsProvider = ProvideCredentials,
+                OnCheckoutProgress = (path, completedSteps, totalSteps) =>
+                {
+                    progressBar.Max = totalSteps;
+                    progressBar.Value = completedSteps;
+                }
             };
 
             PrintBlank();
@@ -134,6 +142,27 @@ namespace Vcs.Git
                 currentDir.Status = $"  To: {Magenta}{repoDir}";
                 Repository.Clone(repo.Value.RepositoryLocation, repoDir, cloneOptions);
             }
+        }
+
+        private Credentials ProvideCredentials(string url, string userName, SupportedCredentialTypes types)
+        {
+            if (_credentials != null)
+                return _credentials;
+
+            if (string.IsNullOrWhiteSpace(userName))
+                userName = Prompt($"{Magenta}User name: ", value => !string.IsNullOrWhiteSpace(value));
+            else
+                PrintLine($"{Magenta}User name: {Reset}{userName}");
+
+            string password = ReadSecret($"{Magenta}Password : ", needValue: true);
+
+            _credentials = new UsernamePasswordCredentials
+            {
+                Username = userName,
+                Password = password,
+            };
+
+            return _credentials;
         }
 
         protected override IEnumerable<Arg> GetArgs()
