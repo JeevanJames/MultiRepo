@@ -44,30 +44,40 @@ namespace Vcs.Git
                 }
             };
 
-            string result = Repository.Clone(ManifestRepoUrl.ToString(), cloneDir, cloneOptions);
+            Repository.Clone(ManifestRepoUrl.ToString(), cloneDir, cloneOptions);
 
-            using (var repo = new Repository(cloneDir))
+            try
             {
-                List<Branch> branches = repo.Branches
-                    .Where(b => b.IsRemote)
-                    .OrderBy(b => b.FriendlyName, StringComparer.OrdinalIgnoreCase)
-                    .ToList();
-                foreach (var b in branches)
+                using (var repo = new Repository(cloneDir))
                 {
-                    string remotePrefix = $"{b.RemoteName}/";
-                    string localBranchName = b.FriendlyName.Substring(remotePrefix.Length);
-                    Branch branch = LibGit2Sharp.Commands.Checkout(repo, localBranchName);
-
-                    if (!File.Exists(manifestPath))
-                        continue;
-
-                    ConsoleEx.PrintLine($"{Clr.Magenta}{branch.FriendlyName}");
-                    if (ShowContent)
+                    List<Branch> branches = repo.Branches
+                        .Where(b => b.IsRemote)
+                        .OrderBy(b => b.FriendlyName, StringComparer.OrdinalIgnoreCase)
+                        .ToList();
+                    foreach (var b in branches)
                     {
-                        string manifestContent = File.ReadAllText(manifestPath);
-                        ConsoleEx.PrintIndented(manifestContent, 4);
+                        string remotePrefix = $"{b.RemoteName}/";
+                        Branch branch = LibGit2Sharp.Commands.Checkout(repo, b);
+
+                        if (!File.Exists(manifestPath))
+                            continue;
+
+                        string displayName = b.FriendlyName.Substring(remotePrefix.Length);
+
+                        ConsoleEx.PrintLine(displayName);
+                        if (ShowContent)
+                        {
+                            string manifestContent = File.ReadAllText(manifestPath);
+                            ConsoleEx.PrintIndented(manifestContent, 4);
+                        }
                     }
                 }
+            }
+            finally
+            {
+                //TODO: Delete clone dir
+                //if (Directory.Exists(cloneDir))
+                //    Directory.Delete(cloneDir, true);
             }
 
             return 0;
