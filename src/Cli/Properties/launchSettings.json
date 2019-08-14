@@ -1,5 +1,8 @@
 {
   "profiles": {
+    "Blank": {
+      "commandName": "Project"
+    },
     "Exec": {
       "commandName": "Project",
       "commandLineArgs": "exec -- dotnet build"

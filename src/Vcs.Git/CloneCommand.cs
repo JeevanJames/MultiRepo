@@ -30,7 +30,7 @@ namespace Vcs.Git
         [Help("manifest repo url", "The clone URL of the repository that contains the project manifest.")]
         public Uri ManifestRepoUrl { get; set; }
 
-        [Help("The root directory of the project being cloned.")]
+        [Help("root directory", "The root directory of the project being cloned.")]
         public DirectoryInfo RootDirectory { get; set; }
 
         [Option("branch")]
