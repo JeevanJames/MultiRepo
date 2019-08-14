@@ -8,7 +8,7 @@
     <PackageReference Include="ConsoleFx.CmdLine.Abstractions" Version="2.0.0-build.175" />
     <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.175" />
     <PackageReference Include="ConsoleTables" Version="2.3.0" />
-    <PackageReference Include="LibGit2Sharp" Version="0.26.0" />
+    <PackageReference Include="LibGit2Sharp" Version="0.26.1" />
   </ItemGroup>
 
   <ItemGroup>
