@@ -14,7 +14,7 @@
     },
     "Project Clone": {
       "commandName": "Project",
-      "commandLineArgs": "p clone https://github.com/JeevanJames/_project.git D:\\Temp\\MyProjects2"
+      "commandLineArgs": "p clone https://github.com/JeevanJames/_project.git D:\\Temp\\MyProjects2 -b swagen"
     },
     "Project List": {
       "commandName": "Project",
