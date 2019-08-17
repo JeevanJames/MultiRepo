@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Blank": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "vcs"
     },
     "Exec": {
       "commandName": "Project",

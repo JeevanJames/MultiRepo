@@ -45,6 +45,8 @@ namespace MultiRepo.Cli
                     Console.WriteLine(version);
                 }
             }
+            else
+                DisplayHelp();
 
             return 0;
         }
