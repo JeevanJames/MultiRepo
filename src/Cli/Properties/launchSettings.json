@@ -51,6 +51,10 @@
     "Version": {
       "commandName": "Project",
       "commandLineArgs": "--version"
+    },
+    "Config": {
+      "commandName": "Project",
+      "commandLineArgs": "config"
     }
   }
 }

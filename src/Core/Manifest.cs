@@ -9,6 +9,9 @@ namespace Core
 {
     public sealed class Manifest
     {
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
         [JsonProperty("repos")]
         public IDictionary<string, RepositoryDefinition> Repositories { get; } = new Dictionary<string, RepositoryDefinition>();
     }

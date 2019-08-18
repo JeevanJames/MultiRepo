@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.Commands;
+
 using LibGit2Sharp;
 
 namespace Vcs.Git

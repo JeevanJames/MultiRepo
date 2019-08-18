@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using ConsoleFx.CmdLine;
+﻿using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
 
 using ConsoleTables;
@@ -11,14 +9,18 @@ namespace Core.Commands
     [Help("Lists all repositories under the current project.")]
     public sealed class ReposListCommand : RepoCommand
     {
+        private readonly ConsoleTable _table = new ConsoleTable("Directory", "URL", "Tags");
+
         protected override int HandleCommand()
         {
-            var table = new ConsoleTable("Directory", "URL", "Tags");
-            foreach (KeyValuePair<string, RepositoryDefinition> repo in FilteredRepositories)
-                table.AddRow(repo.Key, repo.Value.RepositoryLocation, string.Join(" ", repo.Value.Tags));
+            int exitCode = base.HandleCommand();
+            _table.Write(Format.Minimal);
+            return exitCode;
+        }
 
-            table.Write(Format.Minimal);
-            return 0;
+        protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
+        {
+            _table.AddRow(relativeDir, repoDef.RepositoryLocation, string.Join(" ", repoDef.Tags));
         }
     }
 }

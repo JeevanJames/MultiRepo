@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
 using ConsoleFx.ConsoleExtensions;
+
 using Core.Vcs.Commands;
+
 using LibGit2Sharp;
 
 using static ConsoleFx.ConsoleExtensions.Clr;
@@ -24,7 +26,7 @@ namespace Vcs.Git
             ProgressBar checkoutProgress = null;
             StatusLine checkoutStatus = null;
 
-            var signature = new Signature("Multi Repo", "no-reply@jeevanjames.com", DateTimeOffset.Now);
+            var signature = repo.Config.BuildSignature(DateTimeOffset.UtcNow);
             var options = new PullOptions
             {
                 FetchOptions = new FetchOptions
@@ -37,7 +39,7 @@ namespace Vcs.Git
                             {
                                 MaxValue = progress.TotalObjects,
                                 Format = "    Fetching: [<<bar>>] <<percentage>> (<<value>>/<<max>>)"
-                            }, style: ProgressBarStyle.Dots); ;
+                            }, style: ProgressBarStyle.Lines);
                         }
                         fetchProgress.Value = progress.ReceivedObjects * 100;
                         return true;
@@ -53,7 +55,7 @@ namespace Vcs.Git
                             {
                                 MaxValue = total,
                                 Format = "    Checkout: [<<bar>>] <<percentage>> (<<value>>/<<max>>)"
-                            }, style: ProgressBarStyle.Dots);
+                            }, style: ProgressBarStyle.Lines);
                         }
                         if (checkoutStatus is null)
                             checkoutStatus = StatusLine();

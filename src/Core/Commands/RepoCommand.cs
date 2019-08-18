@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using ConsoleFx.CmdLine;
 using ConsoleFx.CmdLine.Program;
 using ConsoleFx.CmdLine.Validators;
+using ConsoleFx.ConsoleExtensions;
 
 namespace Core.Commands
 {
@@ -69,11 +70,18 @@ namespace Core.Commands
             if (!Project.IsValidProject)
                 throw new InvalidOperationException("Not a project. Should be in a project folder to execute this command.");
 
+            if (!string.IsNullOrWhiteSpace(Manifest.Description))
+            {
+                ConsoleEx.PrintLine(Manifest.Description);
+                ConsoleEx.PrintBlank();
+            }
+
             foreach (KeyValuePair<string, RepositoryDefinition> repo in FilteredRepositories)
             {
                 string repoDir = Path.Combine(Project.RootDirectory.FullName, repo.Key);
                 HandleRepo(repo.Key, repo.Value, repoDir);
             }
+
             return 0;
         }
 
