@@ -11,7 +11,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Core.Commands
 {
-    [Command("exec")]
+    [Command("exec", "x")]
     [Help("Executes a command for each repository.")]
     public sealed class ExecCommand : RepoCommand
     {

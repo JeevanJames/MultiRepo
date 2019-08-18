@@ -3,7 +3,7 @@ using ConsoleFx.CmdLine.Program;
 
 namespace Core.Commands
 {
-    [Command("tags")]
+    [Command("tags", "t")]
     [Help("Manage tags under the current project.")]
     public sealed class TagsCommand : AbstractCommand
     {
