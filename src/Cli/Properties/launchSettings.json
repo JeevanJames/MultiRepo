@@ -55,6 +55,11 @@
     "Config": {
       "commandName": "Project",
       "commandLineArgs": "config"
+    },
+    "Test": {
+      "commandName": "Project",
+      "commandLineArgs": "v pull",
+      "workingDirectory": "C:\\DOP\\CoreAzure"
     }
   }
 }

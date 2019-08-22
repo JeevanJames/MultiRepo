@@ -1,0 +1,32 @@
+﻿using LibGit2Sharp;
+using static ConsoleFx.ConsoleExtensions.Clr;
+using static ConsoleFx.ConsoleExtensions.ConsoleEx;
+
+namespace Vcs.Git
+{
+    internal static class CredentialsProvider
+    {
+        private static Credentials _credentials;
+
+        public static Credentials Provide(string url, string userName, SupportedCredentialTypes types)
+        {
+            if (_credentials != null)
+                return _credentials;
+
+            if (string.IsNullOrWhiteSpace(userName))
+                userName = Prompt($"{Magenta}User name: ", value => !string.IsNullOrWhiteSpace(value));
+            else
+                PrintLine($"{Magenta}User name: {Reset}{userName}");
+
+            string password = ReadSecret($"{Magenta}Password : ", needValue: true);
+
+            _credentials = new UsernamePasswordCredentials
+            {
+                Username = userName,
+                Password = password,
+            };
+
+            return _credentials;
+        }
+    }
+}

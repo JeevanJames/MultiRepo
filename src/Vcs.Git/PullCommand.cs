@@ -31,6 +31,7 @@ namespace Vcs.Git
             {
                 FetchOptions = new FetchOptions
                 {
+                    CredentialsProvider = CredentialsProvider.Provide,
                     OnTransferProgress = progress =>
                     {
                         if (fetchProgress is null)
@@ -64,10 +65,26 @@ namespace Vcs.Git
                     }
                 }
             };
-            MergeResult result = LibGit2Sharp.Commands.Pull(repo, signature,options);
-            if (!Statuses.TryGetValue(result.Status, out string statusStr))
-                statusStr = "Unknown status";
-            PrintLine($"    {Yellow}{statusStr}");
+
+            string statusStr;
+            bool isError = true;
+            try
+            {
+                MergeResult result = LibGit2Sharp.Commands.Pull(repo, signature, options);
+                if (!Statuses.TryGetValue(result.Status, out statusStr))
+                    statusStr = "Unknown status";
+                isError = false;
+            }
+            catch (MergeFetchHeadNotFoundException ex)
+            {
+                statusStr = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                statusStr = ex.Message;
+            }
+
+            PrintIndented($"{(isError ? Red : Yellow)}{statusStr}", 4, indentFirstLine: true);
         }
 
         private static readonly IDictionary<MergeStatus, string> Statuses = new Dictionary<MergeStatus, string>

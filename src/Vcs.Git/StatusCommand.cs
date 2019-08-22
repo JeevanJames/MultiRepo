@@ -38,6 +38,9 @@ namespace Vcs.Git
             PrintLine($"{(hasChanges ? Cyan : White)}{relativeDir}");
 
             Branch currentBranch = repo.Branches.FirstOrDefault(b => b.IsCurrentRepositoryHead && !b.IsRemote);
+            if (currentBranch is null)
+                return;
+
             var branchStr = new ColorString("    ## ").Green(currentBranch.FriendlyName);
             if (currentBranch.IsTracking)
             {

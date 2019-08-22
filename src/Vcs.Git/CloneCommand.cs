@@ -25,8 +25,6 @@ namespace Vcs.Git
     [PushDirectory]
     public sealed class CloneCommand : Command
     {
-        private Credentials _credentials;
-
         [Help("manifest repo url", "The clone URL of the repository that contains the project manifest.")]
         public Uri ManifestRepoUrl { get; set; }
 
@@ -78,7 +76,7 @@ namespace Vcs.Git
 
             var cloneOptions = new CloneOptions
             {
-                CredentialsProvider = ProvideCredentials,
+                CredentialsProvider = CredentialsProvider.Provide,
                 OnCheckoutProgress = (path, completedSteps, totalSteps) =>
                 {
                     progressBar.Value = (completedSteps * 100) / totalSteps;
@@ -125,7 +123,7 @@ namespace Vcs.Git
 
             var cloneOptions = new CloneOptions
             {
-                CredentialsProvider = ProvideCredentials,
+                CredentialsProvider = CredentialsProvider.Provide,
                 OnCheckoutProgress = (path, completedSteps, totalSteps) =>
                 {
                     progressBar.Max = totalSteps;
@@ -144,26 +142,6 @@ namespace Vcs.Git
             }
         }
 
-        private Credentials ProvideCredentials(string url, string userName, SupportedCredentialTypes types)
-        {
-            if (_credentials != null)
-                return _credentials;
-
-            if (string.IsNullOrWhiteSpace(userName))
-                userName = Prompt($"{Magenta}User name: ", value => !string.IsNullOrWhiteSpace(value));
-            else
-                PrintLine($"{Magenta}User name: {Reset}{userName}");
-
-            string password = ReadSecret($"{Magenta}Password : ", needValue: true);
-
-            _credentials = new UsernamePasswordCredentials
-            {
-                Username = userName,
-                Password = password,
-            };
-
-            return _credentials;
-        }
 
         protected override IEnumerable<Arg> GetArgs()
         {
