@@ -1,5 +1,11 @@
 {
   "profiles": {
+    "Prompt": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "PromptArgs": "true"
+      }
+    },
     "Blank": {
       "commandName": "Project",
       "commandLineArgs": "vcs"
@@ -51,15 +57,6 @@
     "Version": {
       "commandName": "Project",
       "commandLineArgs": "--version"
-    },
-    "Config": {
-      "commandName": "Project",
-      "commandLineArgs": "config"
-    },
-    "Test": {
-      "commandName": "Project",
-      "commandLineArgs": "v pull",
-      "workingDirectory": "C:\\DOP\\CoreAzure"
     }
   }
 }

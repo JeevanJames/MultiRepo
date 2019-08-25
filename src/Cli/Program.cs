@@ -5,8 +5,12 @@ using System.IO;
 using System.Reflection;
 
 using ConsoleFx.CmdLine;
+using ConsoleFx.CmdLine.Parser;
 using ConsoleFx.CmdLine.Program;
 using ConsoleFx.CmdLine.Program.HelpBuilders;
+
+using static ConsoleFx.ConsoleExtensions.Clr;
+using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace MultiRepo.Cli
 {
@@ -19,9 +23,13 @@ namespace MultiRepo.Cli
 
         private static int Main()
         {
-            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            Trace.AutoFlush = true;
-            //DebugOutput.Enable();
+            string debug = Environment.GetEnvironmentVariable($"MultiRepoDebug");
+            if (string.Equals(debug, "true", StringComparison.OrdinalIgnoreCase))
+            {
+                Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+                Trace.AutoFlush = true;
+                DebugOutput.Enable();
+            }
 
             var program = new Program
             {
@@ -30,7 +38,18 @@ namespace MultiRepo.Cli
             Assembly core = Assembly.Load("Core");
             Assembly vcsGit = Assembly.Load("Vcs.Git");
             program.ScanAssembliesForCommands(core, vcsGit);
+#if DEBUG
+            string promptArgs = Environment.GetEnvironmentVariable("PromptArgs");
+            if (string.Equals(promptArgs, "true", StringComparison.OrdinalIgnoreCase))
+            {
+                string args = Prompt($"Enter input: {Magenta}{program.Name} {Reset}");
+                return program.Run(Parser.Tokenize(args));
+            }
+            else
+                return program.RunWithCommandLineArgs();
+#else
             return program.RunWithCommandLineArgs();
+#endif
         }
 
         protected override int HandleCommand()
