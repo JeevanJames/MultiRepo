@@ -9,7 +9,7 @@ namespace Core.Commands
 {
     [Command("root", ParentType = typeof(ProjectCommand))]
     [Help("Displays the root directory of the current project.")]
-    public sealed class ProjectRootCommand : ManifestCommand
+    public sealed class ProjectRootCommand : BaseManifestCommand
     {
         protected override int HandleCommand()
         {

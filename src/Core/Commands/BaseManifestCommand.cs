@@ -7,11 +7,11 @@ namespace Core.Commands
     ///     <para/>
     ///     This means that the command should be executed from within a valid MultiRepo project.
     /// </summary>
-    public abstract class ManifestCommand : Command
+    public abstract class BaseManifestCommand : Command
     {
         private static Project _project;
 
-        protected ManifestCommand()
+        protected BaseManifestCommand()
         {
             if (_project is null)
                 _project = new Project();

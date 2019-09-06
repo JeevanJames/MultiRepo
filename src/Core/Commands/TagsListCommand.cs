@@ -9,7 +9,7 @@ namespace Core.Commands
 {
     [Command("list", "ls", ParentType = typeof(TagsCommand))]
     [Help("Lists all tags under the current project.")]
-    public sealed class TagsListCommand : RepoCommand
+    public sealed class TagsListCommand : BaseRepoCommand
     {
         [Option("show-repos")]
         public bool ShowRepos { get; set; }

@@ -14,7 +14,7 @@ namespace Vcs.Git
 {
     [Command("status", typeof(VcsCommand))]
     [Help("Displays the status for each repository.")]
-    public sealed class StatusCommand : GitCommand
+    public sealed class StatusCommand : BaseGitCommand
     {
         [Option("include-ignored")]
         public bool IncludeIgnored { get; set; }

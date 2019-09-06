@@ -11,7 +11,7 @@ using ConsoleFx.ConsoleExtensions;
 
 namespace Core.Commands
 {
-    public abstract class RepoCommand : ManifestCommand
+    public abstract class BaseRepoCommand : BaseManifestCommand
     {
         private IDictionary<string, RepositoryDefinition> _filteredRepositories;
 

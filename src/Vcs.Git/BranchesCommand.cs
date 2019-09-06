@@ -14,7 +14,7 @@ namespace Vcs.Git
 {
     [Command("branches", typeof(VcsCommand))]
     [Help("Displays the branches and tracking details of each repository.")]
-    public sealed class BranchCommand : GitCommand
+    public sealed class BranchCommand : BaseGitCommand
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {

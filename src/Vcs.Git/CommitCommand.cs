@@ -13,7 +13,7 @@ namespace Vcs.Git
 {
     [Command("commit", typeof(VcsCommand))]
     [Help("Commits repository changes and optionally pushes to the server.")]
-    public sealed class CommitCommand : GitCommand
+    public sealed class CommitCommand : BaseGitCommand
     {
         [Argument("message")]
         [Help("The commit message.")]

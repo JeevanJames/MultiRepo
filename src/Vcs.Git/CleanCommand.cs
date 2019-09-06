@@ -14,7 +14,7 @@ namespace Vcs.Git
 {
     [Command("clean", typeof(VcsCommand))]
     [Help("Cleans untracked and ignored files from the repository.")]
-    public sealed class CleanCommand : GitCommand
+    public sealed class CleanCommand : BaseGitCommand
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {

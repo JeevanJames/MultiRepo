@@ -5,7 +5,7 @@ using LibGit2Sharp;
 
 namespace Vcs.Git
 {
-    public abstract class GitCommand : RepoCommand
+    public abstract class BaseGitCommand : BaseRepoCommand
     {
         protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
         {

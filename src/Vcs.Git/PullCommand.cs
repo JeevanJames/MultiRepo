@@ -16,7 +16,7 @@ namespace Vcs.Git
 {
     [Command("pull", typeof(VcsCommand))]
     [Help("Pulls latest updates from each repository.")]
-    public sealed class PullCommand : GitCommand
+    public sealed class PullCommand : BaseGitCommand
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
         {

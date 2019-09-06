@@ -13,7 +13,7 @@ namespace Core.Commands
 {
     [Command("exec", "x")]
     [Help("Executes a command for each repository.")]
-    public sealed class ExecCommand : RepoCommand
+    public sealed class ExecCommand : BaseRepoCommand
     {
         [Help("args", "The command to execute.")]
         public IList<string> ExecArgs { get; set; }
