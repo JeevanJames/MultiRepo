@@ -25,6 +25,8 @@ namespace Vcs.Git
     [PushDirectory]
     public sealed class CloneCommand : Command
     {
+        private readonly CredentialProvider _credentialProvider = new CredentialProvider();
+
         [Help("manifest repo url", "The clone URL of the repository that contains the project manifest.")]
         public Uri ManifestRepoUrl { get; set; }
 
@@ -76,7 +78,7 @@ namespace Vcs.Git
 
             var cloneOptions = new CloneOptions
             {
-                CredentialsProvider = CredentialsProvider.Provide,
+                CredentialsProvider = _credentialProvider.Provide,
                 OnCheckoutProgress = (path, completedSteps, totalSteps) =>
                 {
                     progressBar.Value = (completedSteps * 100) / totalSteps;
@@ -123,7 +125,7 @@ namespace Vcs.Git
 
             var cloneOptions = new CloneOptions
             {
-                CredentialsProvider = CredentialsProvider.Provide,
+                CredentialsProvider = _credentialProvider.Provide,
                 OnCheckoutProgress = (path, completedSteps, totalSteps) =>
                 {
                     progressBar.Max = totalSteps;

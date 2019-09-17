@@ -7,6 +7,8 @@ namespace Vcs.Git
 {
     public abstract class BaseGitCommand : BaseRepoCommand
     {
+        protected CredentialProvider CredentialProvider { get; } = new CredentialProvider();
+
         protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
         {
             using (var repo = new Repository(dir))

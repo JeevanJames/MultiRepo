@@ -31,7 +31,7 @@ namespace Vcs.Git
             {
                 FetchOptions = new FetchOptions
                 {
-                    CredentialsProvider = CredentialsProvider.Provide,
+                    CredentialsProvider = CredentialProvider.Provide,
                     OnTransferProgress = progress =>
                     {
                         if (fetchProgress is null)
