@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        "**/*.csproj.user": true,
+        "**/bin": true,
+        "**/obj": true
+    }
+}
