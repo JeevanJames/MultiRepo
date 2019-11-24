@@ -11,6 +11,7 @@ for:
   environment:
     NUGET_API_KEY:
       secure: j4h+o37uqm7LmUncRqQ7KA/M6dBZVo07idthknTFF/k1aVO+MbfT1EecNEJqjPoR
+    NUGET_FEED: https://api.nuget.org/v3/index.json
 
   before_build:
     - pwsh: set-content ./src/Cli/Version.txt "$env:APPVEYOR_BUILD_VERSION"
@@ -25,7 +26,7 @@ for:
   - pwsh: >-
       dotnet pack src/Cli/Cli.csproj -c Release-Tool /p:Version=$env:APPVEYOR_BUILD_VERSION
 
-      dotnet nuget push src/Cli/bin/Release-Tool/dotnet-multirepo.$env:APPVEYOR_BUILD_VERSION.nupkg -k $env:NUGET_API_KEY
+      dotnet nuget push src/Cli/bin/Release-Tool/dotnet-multirepo.$env:APPVEYOR_BUILD_VERSION.nupkg -s $env:NUGET_FEED -k $env:NUGET_API_KEY
 
 -
   branches:
