@@ -1,4 +1,3 @@
-
 for:
 
 -
@@ -7,7 +6,11 @@ for:
       - master
 
   image: Visual Studio 2019
-  version: 1.0.0+{build}
+  version: 0.1.0+{build}
+
+  environment:
+    NUGET_API_KEY:
+      secure: j4h+o37uqm7LmUncRqQ7KA/M6dBZVo07idthknTFF/k1aVO+MbfT1EecNEJqjPoR
 
   before_build:
     - pwsh: set-content ./src/Cli/Version.txt "$env:APPVEYOR_BUILD_VERSION"
@@ -17,6 +20,12 @@ for:
       dotnet build -c Release
 
       dotnet build -c Release-Tool
+
+  deploy_script:
+  - pwsh: >-
+      dotnet pack src/Cli/Cli.csproj -c Release-Tool /p:Version=$env:APPVEYOR_BUILD_VERSION
+
+      dotnet nuget push src/Cli/bin/Release-Tool/dotnet-multirepo.$env:APPVEYOR_BUILD_VERSION.nupkg -k $env:NUGET_API_KEY
 
 -
   branches:
@@ -39,6 +48,7 @@ for:
       dotnet build -c Release
 
       dotnet build -c Release-Tool
+
   deploy_script:
   - pwsh: >-
       dotnet pack src/Cli/Cli.csproj -c Release-Tool /p:Version=$env:APPVEYOR_BUILD_VERSION
