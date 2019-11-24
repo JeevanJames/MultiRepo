@@ -4,6 +4,23 @@ for:
 -
   branches:
     only:
+      - master
+
+  image: Visual Studio 2019
+  version: 1.0.0+{build}
+
+  before_build:
+    - pwsh: set-content ./src/Cli/Version.txt "$env:APPVEYOR_BUILD_VERSION"
+
+  build_script:
+  - pwsh: >-
+      dotnet build -c Release
+
+      dotnet build -c Release-Tool
+
+-
+  branches:
+    only:
       - develop
 
   image: Visual Studio 2019
