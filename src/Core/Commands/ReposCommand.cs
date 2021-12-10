@@ -1,11 +1,11 @@
 ﻿
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
 
 namespace Core.Commands
 {
     [Command("repos", "r")]
-    [Help("Manage repositories under the current project.")]
+    [CommandHelp("Manage repositories under the current project.")]
     public sealed class ReposCommand : AbstractCommand
     {
     }

@@ -1,29 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Parser;
-using ConsoleFx.CmdLine.Program;
-using ConsoleFx.CmdLine.Program.HelpBuilders;
-
-using static ConsoleFx.ConsoleExtensions.Clr;
-using static ConsoleFx.ConsoleExtensions.ConsoleEx;
+using ConsoleFx.CmdLine.Help;
 
 namespace MultiRepo.Cli
 {
-    [Program("mr")]
+    [Program(Name = "mr")]
     internal sealed class Program : ConsoleProgram
     {
         [Option("version")]
-        [Help("Displays the version of the program.")]
+        [OptionHelp("Displays the version of the program.")]
         public bool Version { get; set; }
 
-        private static int Main()
+        private static async Task<int> Main()
         {
-            string debug = Environment.GetEnvironmentVariable($"MultiRepoDebug");
+            string debug = Environment.GetEnvironmentVariable("MultiRepoDebug");
             if (string.Equals(debug, "true", StringComparison.OrdinalIgnoreCase))
             {
                 Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
@@ -31,49 +26,42 @@ namespace MultiRepo.Cli
                 DebugOutput.Enable();
             }
 
-            var program = new Program
-            {
-                HelpBuilder = new DefaultColorHelpBuilder("help", "h"),
-            };
-            Assembly core = Assembly.Load("Core");
-            Assembly vcsGit = Assembly.Load("Vcs.Git");
+            var program = new Program();
+            program.WithHelpBuilder(() => new DefaultColorHelpBuilder("help", "h"));
+
+            var core = Assembly.Load("Core");
+            var vcsGit = Assembly.Load("Vcs.Git");
             program.ScanAssembliesForCommands(core, vcsGit);
 #if DEBUG
-            string promptArgs = Environment.GetEnvironmentVariable("PromptArgs");
-            if (string.Equals(promptArgs, "true", StringComparison.OrdinalIgnoreCase))
-            {
-                string args = Prompt($"Enter input: {Magenta}{program.Name} {Reset}");
-                return program.Run(Parser.Tokenize(args));
-            }
-            else
-                return program.RunWithCommandLineArgs();
+            return await program.RunDebugAsync().ConfigureAwait(false);
 #else
-            return program.RunWithCommandLineArgs();
+            return await program.RunWithCommandLineArgsAsync().ConfigureAwait(false);
 #endif
         }
 
-        protected override int HandleCommand()
+        public override async Task<int> HandleCommandAsync(IParseResult parseResult)
         {
             if (Version)
             {
-                Assembly assembly = Assembly.GetEntryAssembly();
-                using (var stream = assembly.GetManifestResourceStream($"{typeof(Program).Namespace}.Version.txt"))
-                using (var reader = new StreamReader(stream))
+                var assembly = Assembly.GetEntryAssembly();
+                if (assembly is null)
                 {
-                    string version = reader.ReadToEnd();
-                    Console.WriteLine(version);
+                    throw new InvalidOperationException(
+                        "For some reason, we're not able to load the primary assembly.");
                 }
+
+                await using Stream stream = assembly.GetManifestResourceStream($"{typeof(Program).Namespace}.Version.txt");
+                if (stream is null)
+                    throw new InvalidOperationException("Could not locate the version details.");
+
+                using var reader = new StreamReader(stream);
+                string version = await reader.ReadToEndAsync();
+                Console.WriteLine(version);
             }
             else
                 DisplayHelp();
 
             return 0;
-        }
-
-        protected override IEnumerable<Arg> GetArgs()
-        {
-            yield return new Option("version", "v")
-                .UsedAsFlag(optional: true);
         }
     }
 }

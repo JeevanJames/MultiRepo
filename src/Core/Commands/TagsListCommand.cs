@@ -3,27 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
 
 namespace Core.Commands
 {
     [Command("list", "ls", ParentType = typeof(TagsCommand))]
-    [Help("Lists all tags under the current project.")]
+    [CommandHelp("Lists all tags under the current project.")]
     public sealed class TagsListCommand : BaseRepoCommand
     {
-        [Option("show-repos")]
+        [Flag("show-repos")]
         public bool ShowRepos { get; set; }
-
-        protected override IEnumerable<Arg> GetArgs()
-        {
-            return base.GetArgs().Concat(GetMyArgs());
-
-            IEnumerable<Arg> GetMyArgs()
-            {
-                yield return new Option("show-repos")
-                    .UsedAsFlag();
-            }
-        }
 
         protected override int HandleCommand()
         {

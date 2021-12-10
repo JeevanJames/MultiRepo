@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>mr</AssemblyName>
     <RootNamespace>MultiRepo.Cli</RootNamespace>
     <!-- Package details -->
@@ -12,7 +12,7 @@
     <Company>Jeevan James</Company>
     <Product>MultiRepo</Product>
     <Description>dotnet tool to manage multi-repository projects.</Description>
-    <Copyright>Copyright (c) 2019 Jeevan James</Copyright>
+    <Copyright>Copyright (c) 2019-2020 Jeevan James</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/JeevanJames/MultiRepo</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JeevanJames/MultiRepo.git</RepositoryUrl>
@@ -53,8 +53,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.236" />
-    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.236" />
+    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.420" />
+    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.420" />
   </ItemGroup>
 
   <ItemGroup>

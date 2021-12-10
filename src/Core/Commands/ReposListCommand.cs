@@ -1,12 +1,12 @@
 ﻿using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
 
 using ConsoleTables;
 
 namespace Core.Commands
 {
     [Command("list", "ls", ParentType = typeof(ReposCommand))]
-    [Help("Lists all repositories under the current project.")]
+    [CommandHelp("Lists all repositories under the current project.")]
     public sealed class ReposListCommand : BaseRepoCommand
     {
         private readonly ConsoleTable _table = new ConsoleTable("Directory", "URL", "Tags");

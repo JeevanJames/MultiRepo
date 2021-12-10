@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
 using ConsoleFx.ConsoleExtensions;
 
 using Core.Vcs.Commands;
@@ -15,7 +15,7 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Vcs.Git
 {
     [Command("pull", typeof(VcsCommand))]
-    [Help("Pulls latest updates from each repository.")]
+    [CommandHelp("Pulls latest updates from each repository.")]
     public sealed class PullCommand : BaseGitCommand
     {
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)

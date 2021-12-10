@@ -7,9 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F16DE45E-22E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cli", "src\Cli\Cli.csproj", "{B46043FC-2528-49C1-9677-2D20950B90B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vcs.Git", "src\Vcs.Git\Vcs.Git.csproj", "{4A3BC99F-CBA6-4CEB-A902-DAFD2AB801DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vcs.Git", "src\Vcs.Git\Vcs.Git.csproj", "{4A3BC99F-CBA6-4CEB-A902-DAFD2AB801DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.csproj", "{C38FAF33-E1D0-457C-9D5A-F8C69FBFB760}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.csproj", "{C38FAF33-E1D0-457C-9D5A-F8C69FBFB760}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34ED9623-16C6-4378-B0AA-BB0EF813F1D4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

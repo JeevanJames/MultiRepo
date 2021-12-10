@@ -1,14 +1,14 @@
 ﻿using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
+
 using Core.Vcs.Commands;
 
-using static ConsoleFx.ConsoleExtensions.Clr;
 using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 
 namespace Core.Commands
 {
     [Command("root", ParentType = typeof(ProjectCommand))]
-    [Help("Displays the root directory of the current project.")]
+    [CommandHelp("Displays the root directory of the current project.")]
     public sealed class ProjectRootCommand : BaseManifestCommand
     {
         protected override int HandleCommand()

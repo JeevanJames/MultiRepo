@@ -2,9 +2,11 @@
 using System.Linq;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
 using ConsoleFx.ConsoleExtensions;
+
 using Core.Vcs.Commands;
+
 using LibGit2Sharp;
 
 using static ConsoleFx.ConsoleExtensions.Clr;
@@ -13,13 +15,13 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Vcs.Git
 {
     [Command("status", typeof(VcsCommand))]
-    [Help("Displays the status for each repository.")]
+    [CommandHelp("Displays the status for each repository.")]
     public sealed class StatusCommand : BaseGitCommand
     {
-        [Option("include-ignored")]
+        [Flag("include-ignored", "i")]
         public bool IncludeIgnored { get; set; }
 
-        [Option("exclude-untracked")]
+        [Flag("exclude-untracked", "e")]
         public bool ExcludeUntracked { get; set; }
 
         protected override void HandleGit(Repository repo, string directory, string relativeDir, string repoUrl)
@@ -113,18 +115,5 @@ namespace Vcs.Git
                 (FileStatus.Ignored, "I", CColor.Gray),
                 (FileStatus.Conflicted, "C", CColor.Red),
             };
-
-        protected override IEnumerable<Arg> GetArgs()
-        {
-            return base.GetArgs().Concat(GetMyArgs());
-
-            IEnumerable<Arg> GetMyArgs()
-            {
-                yield return new Option("include-ignored", "i")
-                    .UsedAsFlag();
-                yield return new Option("exclude-untracked", "u")
-                    .UsedAsFlag();
-            }
-        }
     }
 }

@@ -4,8 +4,7 @@ using System.IO;
 using System.Linq;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
-using ConsoleFx.CmdLine.Validators;
+using ConsoleFx.CmdLine.Help;
 using ConsoleFx.ConsoleExtensions;
 
 using Core;
@@ -21,28 +20,30 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Vcs.Git
 {
     [Command("clone", typeof(ProjectCommand))]
-    [Help("Clones a project to the local system.")]
+    [CommandHelp("Clones a project to the local system.")]
     [PushDirectory]
     public sealed class CloneCommand : Command
     {
         private readonly CredentialProvider _credentialProvider = new CredentialProvider();
 
-        [Help("manifest repo url", "The clone URL of the repository that contains the project manifest.")]
+        [Argument(Order = 0)]
+        [ArgumentHelp("manifest repo url", "The clone URL of the repository that contains the project manifest.")]
         public Uri ManifestRepoUrl { get; set; }
 
-        [Help("root directory", "The root directory of the project being cloned.")]
+        [Argument(Order = 1)]
+        [ArgumentHelp("root directory", "The root directory of the project being cloned.")]
         public DirectoryInfo RootDirectory { get; set; }
 
         [Option("branch")]
-        [Help("The branch in the manifest repository to checkout. Defaults to the default branch.")]
+        [OptionHelp("The branch in the manifest repository to checkout. Defaults to the default branch.")]
         public string Branch { get; set; }
 
         [Option("manifest-dir")]
-        [Help("The relative directory from the project root to clone the manifest repository to. Defaults to _project.")]
+        [OptionHelp("The relative directory from the project root to clone the manifest repository to. Defaults to _project.")]
         public string ManifestDirectory { get; set; }
 
         [Option("repo-dir")]
-        [Help("The directory in the manifest repository that contains the manifest file.")]
+        [OptionHelp("The directory in the manifest repository that contains the manifest file.")]
         public string RepoDirectory { get; set; }
 
         protected override int HandleCommand()
@@ -142,30 +143,6 @@ namespace Vcs.Git
                 currentDir.Status = $"  To: {Magenta}{repoDir}";
                 Repository.Clone(repo.Value.RepositoryLocation, repoDir, cloneOptions);
             }
-        }
-
-
-        protected override IEnumerable<Arg> GetArgs()
-        {
-            yield return new Argument(nameof(ManifestRepoUrl))
-                .ValidateAsUri(UriKind.Absolute)
-                .TypedAs<Uri>();
-
-            yield return new Argument(nameof(RootDirectory))
-                .ValidateAsDirectory()
-                .TypedAs(value => new DirectoryInfo(value))
-                .DefaultsTo(new DirectoryInfo("."));
-
-            yield return new Option("branch", "b")
-                .UsedAsSingleParameter();
-
-            yield return new Option("manifest-dir", "m")
-                .UsedAsSingleParameter()
-                .ValidateAsString(1)
-                .DefaultsTo("_project");
-
-            yield return new Option("repo-dir")
-                .UsedAsSingleParameter();
         }
     }
 }

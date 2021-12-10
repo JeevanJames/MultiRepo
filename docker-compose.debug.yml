@@ -1,0 +1,11 @@
+
+version: '3.4'
+
+services:
+  cli:
+    image: cli
+    build:
+      context: .
+      dockerfile: src/Cli/Dockerfile
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw

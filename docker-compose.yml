@@ -1,0 +1,10 @@
+
+version: '3.4'
+
+services:
+  cli:
+    image: cli
+    build:
+      context: .
+      dockerfile: src/Cli/Dockerfile
+    image: jeevanjames/mr

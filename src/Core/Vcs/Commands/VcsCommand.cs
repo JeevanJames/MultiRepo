@@ -1,10 +1,10 @@
 ﻿using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
 
 namespace Core.Vcs.Commands
 {
     [Command("vcs", "v")]
-    [Help("Version control system commands")]
+    [CommandHelp("Version control system commands")]
     public sealed class VcsCommand : AbstractCommand
     {
     }

@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleFx.CmdLine.Abstractions" Version="2.0.0-build.236" />
-    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.236" />
-    <PackageReference Include="ConsoleTables" Version="2.3.0" />
-    <PackageReference Include="LibGit2Sharp" Version="0.26.1" />
+    <PackageReference Include="ConsoleFx.CmdLine.Abstractions" Version="2.0.0-build.420" />
+    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.420" />
+    <PackageReference Include="ConsoleTables" Version="2.4.2" />
+    <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
   </ItemGroup>
 
   <ItemGroup>

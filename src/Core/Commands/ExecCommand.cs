@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
 using ConsoleFx.ConsoleExtensions;
 
 using static ConsoleFx.ConsoleExtensions.Clr;
@@ -12,10 +12,11 @@ using static ConsoleFx.ConsoleExtensions.ConsoleEx;
 namespace Core.Commands
 {
     [Command("exec", "x")]
-    [Help("Executes a command for each repository.")]
+    [CommandHelp("Executes a command for each repository.")]
     public sealed class ExecCommand : BaseRepoCommand
     {
-        [Help("args", "The command to execute.")]
+        [Argument(MaxOccurences = byte.MaxValue)]
+        [ArgumentHelp("args", "The command to execute.")]
         public IList<string> ExecArgs { get; set; }
 
         protected override void HandleRepo(string relativeDir, RepositoryDefinition repoDef, string dir)
@@ -38,16 +39,6 @@ namespace Core.Commands
             finally
             {
                 Directory.SetCurrentDirectory(currentDir);
-            }
-        }
-
-        protected override IEnumerable<Arg> GetArgs()
-        {
-            return base.GetArgs().Concat(GetMyArgs());
-
-            IEnumerable<Arg> GetMyArgs()
-            {
-                yield return new Argument(nameof(ExecArgs), maxOccurences: byte.MaxValue);
             }
         }
     }

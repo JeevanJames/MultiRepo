@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using ConsoleFx.CmdLine;
-using ConsoleFx.CmdLine.Program;
+using ConsoleFx.CmdLine.Help;
 using ConsoleFx.CmdLine.Validators;
 using ConsoleFx.ConsoleExtensions;
 
@@ -15,55 +15,39 @@ namespace Core.Commands
     {
         private IDictionary<string, RepositoryDefinition> _filteredRepositories;
 
-        [Option("tags")]
-        [Help("Operate on only the repositories with these tags.")]
+        [Option("tags", MultipleOccurrences = true, MultipleParameters = true)]
+        [OptionHelp("Operate on only the repositories with these tags.")]
         public IList<string> Tags { get; set; }
 
-        [Option("exclude-tags")]
-        [Help("Operate on only repositories without these tags.")]
+        [Option("exclude-tags", MultipleOccurrences = true, MultipleParameters = true)]
+        [OptionHelp("Operate on only repositories without these tags.")]
         public IList<string> ExcludedTags { get; set; }
 
-        [Option("only-me")]
-        [Help("Only operate on the repository of the current directory.")]
+        [Flag("only-me")]
+        [FlagHelp("Only operate on the repository of the current directory.")]
         public bool OnlyMe { get; set; }
 
         [Option("repo")]
-        [Help("Operate on only repositories have names containing the specified case-insensitive string.")]
+        [OptionHelp("Operate on only repositories have names containing the specified case-insensitive string.")]
         public string RepoName { get; set; }
 
         [Option("exclude-repo")]
-        [Help("Do not operate on repositories having the names containing the specified case-insensitive string.")]
+        [OptionHelp("Do not operate on repositories having the names containing the specified case-insensitive string.")]
         public string ExcludeRepoName { get; set; }
 
         public IDictionary<string, RepositoryDefinition> FilteredRepositories =>
             _filteredRepositories ?? (_filteredRepositories = GetFilteredRepositories().ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
 
-        protected override IEnumerable<Arg> GetArgs()
+        protected override void SetupOptions(Options options)
         {
-            return base.GetArgs().Concat(GetMyArgs());
+            Option tagsOption = options["tags"];
+            tagsOption.ValidateWithRegex(TagPattern);
 
-            IEnumerable<Arg> GetMyArgs()
-            {
-                yield return new Option("tags", "it")
-                    .UsedAsUnlimitedOccurrencesAndParameters(optional: true)
-                    .ValidateWithRegex(TagPattern);
-
-                yield return new Option("exclude-tags", "et")
-                    .UsedAsUnlimitedOccurrencesAndParameters(optional: true)
-                    .ValidateWithRegex(TagPattern);
-
-                yield return new Option("only-me", "me")
-                    .UsedAsFlag(optional: true);
-
-                yield return new Option("repo", "ir")
-                    .UsedAsSingleParameter();
-
-                yield return new Option("exclude-repo", "er")
-                    .UsedAsSingleParameter();
-            }
+            Option excludeTagsOption = options["exclude-tags"];
+            excludeTagsOption.ValidateWithRegex(TagPattern);
         }
 
-        private static readonly Regex TagPattern = new Regex(@"^(\w[\w_-]*)$");
+        private static readonly Regex TagPattern = new Regex(@"^(\w[\w_-]*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
 
         protected override int HandleCommand()
         {
