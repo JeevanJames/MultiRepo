@@ -1,68 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>mr</AssemblyName>
-    <RootNamespace>MultiRepo.Cli</RootNamespace>
-    <!-- Package details -->
-    <PackageId>dotnet-multirepo</PackageId>
-    <Version>0.0.1</Version>
-    <Authors>Jeevan James</Authors>
-    <Company>Jeevan James</Company>
-    <Product>MultiRepo</Product>
-    <Description>dotnet tool to manage multi-repository projects.</Description>
-    <Copyright>Copyright (c) 2019-2020 Jeevan James</Copyright>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/JeevanJames/MultiRepo</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/JeevanJames/MultiRepo.git</RepositoryUrl>
-    <RepositoryType>Git</RepositoryType>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>mr</AssemblyName>
+        <RootNamespace>MultiRepo.Cli</RootNamespace>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsAsErrors />
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-  </PropertyGroup>
+        <!-- Package details -->
+        <PackageId>dotnet-multirepo</PackageId>
+        <Version>0.0.1</Version>
+        <Authors>Jeevan James</Authors>
+        <Company>Jeevan James</Company>
+        <Product>MultiRepo</Product>
+        <Description>dotnet tool to manage multi-repository projects.</Description>
+        <Copyright>Copyright (c) 2019-2020 Jeevan James</Copyright>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/JeevanJames/MultiRepo</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/JeevanJames/MultiRepo.git</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Tool|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>mr</ToolCommandName>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Tool|AnyCPU'">
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>mr</ToolCommandName>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Tool|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>mr</ToolCommandName>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Tool|AnyCPU'">
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>mr</ToolCommandName>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Version.txt" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Version.txt" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Version.txt" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.420" />
+        <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.420" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="ConsoleFx.CmdLine.Program" Version="2.0.0-build.420" />
-    <PackageReference Include="ConsoleFx.ConsoleExtensions" Version="2.0.0-build.420" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Vcs.Git\Vcs.Git.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Vcs.Git\Vcs.Git.csproj" />
+    </ItemGroup>
 
 </Project>
